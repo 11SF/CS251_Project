@@ -34,7 +34,7 @@
         <v-card-text>ต้องการโหวตอาจารย์ ...</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false">
+          <v-btn color="red darken-1" text @click="dialog = false">
             ยกเลิก
           </v-btn>
           <v-btn color="green darken-1" text @click="dialog = false">
