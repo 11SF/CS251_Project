@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import StudentHome from "../views/StudentHome.vue";
 
 Vue.use(VueRouter);
 
@@ -12,33 +11,67 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Test.vue"),
   },
   {
-    path: "/student",
-    name: "StudentHome",
-    component: StudentHome,
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-  {
     path: "/login",
     name: "Login",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+    component: () => import("../views/Login.vue"),
   },
+  // Student Path
+  {
+    path: "/student",
+    name: "StudentHome",
+    component: () => import("../views/Student/StudentHome.vue"),
+  },
+  {
+    path: "/student/gradeview",
+    name: "GradeView",
+    component: () => import("../views/Student/GradeView.vue"),
+  },
+  {
+    path: "/student/information",
+    name: "StudentInformation",
+    component: () => import("../views/Student/Information.vue"),
+  },
+  {
+    path: "/student/score",
+    name: "Score",
+    component: () => import("../views/Student/ScorePerSubject.vue"),
+  },
+  {
+    path: "/student/teacherinfo",
+    name: "TeacherInfo",
+    component: () => import("../views/Student/TeacherInfo.vue"),
+  },
+  {
+    path: "/student/vote",
+    name: "VoteTeacher",
+    component: () => import("../views/Student/VoteTeacher.vue"),
+  },
+  // Teacher Path
   {
     path: "/teacher",
     name: "Teacher",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/TeacherHome.vue"),
+    component: () => import("../views/Teacher/TeacherHome.vue"),
   },
+  {
+    path: "/teacher/score",
+    name: "TeacherScore",
+    component: () => import("../views/Teacher/EditScore.vue"),
+  },
+  {
+    path: "/teacher/information",
+    name: "TeacherInformation",
+    component: () => import("../views/Teacher/Information.vue"),
+  },
+  {
+    path: "/teacher/studentview",
+    name: "StudentView",
+    component: () => import("../views/Teacher/StudentView.vue"),
+  },
+  //Academic Path
   {
     path: "/academic",
     name: "Academic",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AcademicHome.vue"),
+    component: () => import("../views/Academic/AcademicHome.vue"),
   },
 ];
 
