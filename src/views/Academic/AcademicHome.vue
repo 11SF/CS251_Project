@@ -65,34 +65,22 @@
       </v-list>
     </v-navigation-drawer>
     <v-main class="content">
-      <MainTeacher v-if="menuSelect == 1" />
+      <!-- <MainTeacher v-if="menuSelect == 1" />
       <Information v-if="menuSelect == 2" />
       <TeacherTime v-if="menuSelect == 3" />
       <SubjectView v-if="menuSelect == 4" />
       <ClassView v-if="menuSelect == 5" />
-      <TeacherView v-if="menuSelect == 6" />
+      <TeacherView v-if="menuSelect == 6" /> -->
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Information from "../components/Academic/Information";
-import TeacherTime from "../components/Academic/TeacherTime";
-import SubjectView from "../components/Academic/SubjectView";
-import ClassView from "../components/Academic/ClassView";
-import TeacherView from "../components/Academic/TeacherView";
 export default {
   data() {
     return {
       menuSelect: 1,
     };
-  },
-  components: {
-    Information,
-    TeacherTime,
-    SubjectView,
-    ClassView,
-    TeacherView,
-  },
+  }
 };
 </script>

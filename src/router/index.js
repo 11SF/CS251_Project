@@ -73,6 +73,36 @@ const routes = [
     name: "Academic",
     component: () => import("../views/Academic/AcademicHome.vue"),
   },
+  {
+    path: "/academic/ClassView",
+    name: "Academic",
+    component: () => import("../views/Academic/ClassView.vue"),
+  },
+  {
+    path: "/academic/EditInformation",
+    name: "Academic",
+    component: () => import("../views/Academic/EditInformation.vue"),
+  },
+  {
+    path: "/academic/Information",
+    name: "Academic",
+    component: () => import("../views/Academic/Information.vue"),
+  },
+  {
+    path: "/academic/SubjectView",
+    name: "Academic",
+    component: () => import("../views/Academic/SubjectView.vue"),
+  },
+  {
+    path: "/academic/TeacherTime",
+    name: "Academic",
+    component: () => import("../views/Academic/TeacherTime.vue"),
+  },
+  {
+    path: "/academic",
+    name: "Academic",
+    component: () => import("../views/Academic/TeacherView.vue"),
+  },
 ];
 
 const router = new VueRouter({

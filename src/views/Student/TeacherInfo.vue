@@ -1,56 +1,193 @@
+/* eslint-disable */
 <template>
-  <v-container class="mt-10">
-    <section>
-      <v-select label="กลุ่มสาระ"></v-select>
-    </section>
-    <section>
-      <h2 class="text-center">หัวหน้ากลุ่มสาระ</h2>
-      <v-card width="250" class="mx-auto my-13">
-        <v-img
-          src="https://scontent.fbkk5-5.fna.fbcdn.net/v/t1.6435-9/78841364_1483018058513655_7304058187152359424_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeHJm9NOLoct9bCHqw-G08ONZK5EAyawzERkrkQDJrDMRLs4hTtJks3WHr1rL5DhFz-PpzMn3CdEjqDCnX0wZoix&_nc_ohc=E6fMG465P24AX8YTGHZ&_nc_ht=scontent.fbkk5-5.fna&oh=94a18ec6ab71c7432efcf19a63f2f8ff&oe=609CF1B7"
-          height="200"
-        ></v-img>
-        <div class="pa-5">
-          <h5>Lorem ipsum dolor sit.</h5>
-          <p>กลุ่มสาระการเรียนรู้ xxxxxxxx</p>
-          <p>
-            <v-icon class="pr-3">mdi-phone</v-icon>
-            012 345 6789
-          </p>
-          <p>
-            <v-icon class="pr-3">mdi-email</v-icon>
-            xxxxxxxxx@xxxxxx.com
-          </p>
-        </div>
-      </v-card>
-    </section>
-    <v-divider></v-divider>
+  <v-content>
+    <v-navigation-drawer app clipped>
+      <v-list>
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title class="title"> {{$store.getters.getUserData.nameTH}} </v-list-item-title>
+            <v-list-item-subtitle>role : {{$store.getters.getUserData.role}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
 
-    <v-row class="my-13">
-      <v-col cols="12" lg="3" v-for="i in 10" :key="i">
-        <v-card width="250" class="mx-auto">
-          <v-img
-            src="https://scontent.fbkk5-5.fna.fbcdn.net/v/t1.6435-9/78841364_1483018058513655_7304058187152359424_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeHJm9NOLoct9bCHqw-G08ONZK5EAyawzERkrkQDJrDMRLs4hTtJks3WHr1rL5DhFz-PpzMn3CdEjqDCnX0wZoix&_nc_ohc=E6fMG465P24AX8YTGHZ&_nc_ht=scontent.fbkk5-5.fna&oh=94a18ec6ab71c7432efcf19a63f2f8ff&oe=609CF1B7"
-            height="200"
-          ></v-img>
-          <div class="pa-5">
-            <h5>Lorem ipsum dolor sit.</h5>
-            <p>กลุ่มสาระการเรียนรู้ xxxxxxxxxxxxxxx</p>
-            <p>
-              <v-icon class="pr-3">mdi-phone</v-icon>
-              xxxxxxxxxx
-            </p>
-            <p>
-              <v-icon class="pr-3">mdi-email</v-icon>
-              xxxxxx@xxxxx.com
-            </p>
+      <v-divider></v-divider>
+
+      <v-list nav dense>
+        <v-list-item link @click="menuSelect(1)">
+          <v-list-item-icon>
+            <v-icon>mdi-folder</v-icon>
+          </v-list-item-icon>
+          <router-link to="/student"></router-link>
+          <v-list-item-title>หน้าแรก</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(2)">
+          <v-list-item-icon>
+            <v-icon>mdi-account-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>ข้อมูลส่วนตัว</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(3)">
+          <v-list-item-icon>
+            <v-icon>mdi-star</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>คะแนนรายวิชา</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(4)">
+          <v-list-item-icon>
+            <v-icon>mdi-star</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>เกรดเฉลี่ย</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(5)">
+          <v-list-item-icon>
+            <v-icon color="blue">mdi-star</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>ข้อมูลอาจารย์</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(6)">
+          <v-list-item-icon>
+            <v-icon>mdi-star</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>โหวดอาจารย์ดีเด่น</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main class="pa-0 content">
+      <v-container class="mt-10">
+        <section>
+          <v-select
+            label="กลุ่มสาระ"
+            :items="department"
+            item-text="departmen_name"
+            item-value="department_id"
+            v-model="depart"
+            @input="fetchTeacherList"
+          ></v-select>
+        </section>
+        <section v-if="teacherList != ''">
+          <h2 class="text-center">หัวหน้ากลุ่มสาระ</h2>
+          <div v-for="i in teacherList" :key="i">
+            <v-card width="250" class="mx-auto my-13" v-if="i.Type == 1">
+              <v-img :src="userImageMock()" height="200"></v-img>
+              <div class="pa-5">
+                <h5>{{ i.FnameTH + " " + i.LnameTH }}</h5>
+                <p>หัวหน้ากลุ่มสาระ</p>
+                <p>กลุ่มสาระการเรียนรู้{{ i.departmen_name }}</p>
+                <p>
+                  <v-icon class="pr-3">mdi-phone</v-icon>
+                  {{ i.phone }}
+                </p>
+                <p>
+                  <v-icon class="pr-3">mdi-email</v-icon>
+                  {{ i.email }}
+                </p>
+              </div>
+            </v-card>
           </div>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+        </section>
+        <v-divider></v-divider>
+
+        <v-row class="my-13">
+          <v-col cols="12" lg="3" v-for="i in teacherList" :key="i">
+            <v-card width="250" class="mx-auto" v-if="i.Type == 3">
+              <v-img :src="userImageMock()" height="200"></v-img>
+              <div class="pa-5">
+                <h5>{{ i.FnameTH + " " + i.LnameTH }}</h5>
+                <p>กลุ่มสาระการเรียนรู้{{ i.departmen_name }}</p>
+                <p>
+                  <v-icon class="pr-3">mdi-phone</v-icon>
+                  {{ i.phone }}
+                </p>
+                <p>
+                  <v-icon class="pr-3">mdi-email</v-icon>
+                  {{ i.email }}
+                </p>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-content>
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  data() {
+    return {
+      department: "",
+      depart: "",
+      teacherList: "",
+    };
+  },
+  methods: {
+    menuSelect(select) {
+      if (select == 1) this.$router.push({ name: "StudentHome" });
+      else if (select == 3) this.$router.push({ name: "Score" });
+      else if (select == 4) this.$router.push({ name: "GradeView" });
+      else if (select == 2) this.$router.push({ name: "StudentInformation" });
+      else if (select == 6) this.$router.push({ name: "VoteTeacher" });
+    },
+    fetchDepartment() {
+      axios
+        .get("/user/department/get/all", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+        })
+        .then((res) => {
+          this.department = res.data;
+          console.log(res.data);
+        });
+    },
+    fetchTeacherList() {
+      console.log(this.depart);
+      axios
+        .get("/user/teacher/get/byDepartment", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            DepartID: this.depart,
+          },
+        })
+        .then((res) => {
+          this.teacherList = res.data;
+          console.log(res.data);
+        });
+    },
+    userImageMock() {
+      return (
+        "https://randomuser.me/api/portraits/men/" +
+        Math.floor(Math.random() * 100) +
+        ".jpg"
+      );
+    },
+  },
+  created() {
+    this.fetchDepartment();
+  },
+};
 </script>
+<style scoped>
+.content {
+  max-width: 1300px;
+  margin: 50px auto;
+}
+.outlined {
+  border: 4px dotted #81c784;
+  border-radius: 100%;
+  padding: 100px;
+}
+.outlined img {
+  padding: 10px;
+}
+</style>

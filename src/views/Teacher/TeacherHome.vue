@@ -51,30 +51,18 @@
       </v-list>
     </v-navigation-drawer>
     <v-main class="content">
-      <MainTeacher v-if="menuSelect == 1" />
-      <Information v-if="menuSelect == 2" />
-      <EditScore v-if="menuSelect == 3" />
-      <ViewStudent v-if="menuSelect == 4" />
+
     </v-main>
   </v-app>
 </template>
 
 <script>
-import MainTeacher from "../components/Teacher/Main";
-import Information from "../components/Teacher/Information";
-import EditScore from "../components/Teacher/EditScore";
-import ViewStudent from "../components/Teacher/StudentView";
 export default {
   data() {
     return {
       menuSelect: 1,
     };
   },
-  components: {
-    MainTeacher,
-    Information,
-    EditScore,
-    ViewStudent,
-  },
+
 };
 </script>

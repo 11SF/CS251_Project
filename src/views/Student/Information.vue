@@ -1,152 +1,283 @@
+/* eslint-disable */
 <template>
-  <v-container class="mt-10">
-    <h1>ข้อมูลส่วนตัว</h1>
-    <v-row class="mt-10">
-      <v-col cols="12" lg="6">
-        <v-card class="pa-5" rounded="xl">
-          <v-row dense>
-            <v-col cols="12" lg="5" align-self="center" class="text-center">
-              <v-avatar size="208" class="d-flex mx-auto outlined">
-                <img
-                  src="https://scontent.fbkk5-7.fna.fbcdn.net/v/t1.6435-1/p320x320/107698195_2967815813287518_541907919760258090_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeE3aO3DclaFIA835EOawoRtfGJcX_stZBh8Ylxf-y1kGO4umJMtOdZxjXdSJ5N0IJpcc6Rpj9i_eCT85UwALEOj&_nc_ohc=EFiQGU8_0UkAX9LrfQz&_nc_ht=scontent.fbkk5-7.fna&tp=6&oh=bb47ded825db3f157b54119d14141464&oe=609C1869"
-                  alt="John"
-                />
-              </v-avatar>
-              <v-chip class="ma-2" color="#81c784" dark> Student </v-chip>
-            </v-col>
-            <v-col cols="12" lg="7" class="pa-5">
-              <h3>{{ user.th_name }}</h3>
-              <h4 class="mb-2 indigo--text text-lighten-2 mb-2">
-                {{ user.en_name }}
-              </h4>
-              <div class="d-flex">
-                <p class="pr-7">ชื่อเล่น {{ user.nickname }}</p>
-                <p>เพศ {{ user.sex }}</p>
-              </div>
-              <p>รหัสนักเรียน {{ user.student_id }}</p>
-              <p>ห้อง {{ user.class }}</p>
-              <p>เลขประจำตัวประชาชน {{ user.citizen_id }}</p>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-row>
-          <v-col cols="12">
-            <v-card class="pa-10" rounded="xl">
-              <h4>ข้อมูลติดต่อ</h4>
-              <div class="px-5 pt-5 d-flex justify-content-around">
-                <p class="text-center pr-5">
-                  <v-icon class="mr-5" color="indigo lighten-2">
-                    mdi-phone
-                  </v-icon>
-                  {{ user.phone }}
-                </p>
-                <p class="text-center">
-                  <v-icon class="mr-5" color="indigo lighten-2">
-                    mdi-email
-                  </v-icon>
-                  {{ user.email }}
-                </p>
+  <v-content>
+    <v-navigation-drawer app clipped>
+      <v-list>
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title class="title"> {{$store.getters.getUserData.nameTH}} </v-list-item-title>
+            <v-list-item-subtitle>role : {{$store.getters.getUserData.role}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-divider></v-divider>
+
+      <v-list nav dense>
+        <v-list-item link @click="menuSelect(1)">
+          <v-list-item-icon>
+            <v-icon>mdi-folder</v-icon>
+          </v-list-item-icon>
+          <router-link to="/student"></router-link>
+          <v-list-item-title>หน้าแรก</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(2)">
+          <v-list-item-icon>
+            <v-icon color="blue">mdi-account-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>ข้อมูลส่วนตัว</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(3)">
+          <v-list-item-icon>
+            <v-icon>mdi-star</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>คะแนนรายวิชา</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(4)">
+          <v-list-item-icon>
+            <v-icon>mdi-star</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>เกรดเฉลี่ย</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(5)">
+          <v-list-item-icon>
+            <v-icon>mdi-star</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>ข้อมูลอาจารย์</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link @click="menuSelect(6)">
+          <v-list-item-icon>
+            <v-icon>mdi-star</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>โหวดอาจารย์ดีเด่น</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main class="pa-0 content">
+      <v-container v-if="user != 'Loading'">
+        <h1>ข้อมูลส่วนตัว</h1>
+        <v-row class="mt-10">
+          <v-col cols="12" lg="6">
+            <v-card class="pa-5 mb-4" rounded="xl">
+              <v-row dense>
+                <v-col cols="12" lg="5" align-self="center" class="text-center">
+                  <v-avatar size="208" class="d-flex mx-auto outlined">
+                    <img
+                      src="https://scontent.fbkk5-7.fna.fbcdn.net/v/t1.6435-1/p320x320/107698195_2967815813287518_541907919760258090_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeE3aO3DclaFIA835EOawoRtfGJcX_stZBh8Ylxf-y1kGO4umJMtOdZxjXdSJ5N0IJpcc6Rpj9i_eCT85UwALEOj&_nc_ohc=EFiQGU8_0UkAX9LrfQz&_nc_ht=scontent.fbkk5-7.fna&tp=6&oh=bb47ded825db3f157b54119d14141464&oe=609C1869"
+                      alt="John"
+                    />
+                  </v-avatar>
+                  <v-chip class="ma-2" color="#81c784" dark> Student </v-chip>
+                </v-col>
+                <v-col cols="12" lg="7" class="pa-5">
+                  <h3>
+                    {{
+                      user[0].profile.FnameTH + " " + user[0].profile.LnameTH
+                    }}
+                  </h3>
+                  <h4 class="mb-2 indigo--text text-lighten-2 mb-2">
+                    {{
+                      user[0].profile.FnameEN + " " + user[0].profile.LnameEN
+                    }}
+                  </h4>
+                  <div class="d-flex">
+                    <p class="pr-7">ชื่อเล่น {{ user[0].profile.Nickname }}</p>
+                    <p>เพศ {{ user[0].profile.sex }}</p>
+                  </div>
+                  <p>รหัสนักเรียน {{ user[0].profile.ID }}</p>
+                  <p>
+                    ห้อง ม.{{
+                      " " + classroom[0].Level + "/" + classroom[0].Room
+                    }}
+                  </p>
+                  <p>เลขประจำตัวประชาชน {{ user[0].profile.CitizenID }}</p>
+                </v-col>
+              </v-row>
+            </v-card>
+            <v-row>
+              <v-col cols="12">
+                <v-card class="pa-10" rounded="xl">
+                  <h4>ข้อมูลติดต่อ</h4>
+                  <div class="px-5 pt-5 d-flex justify-content-around">
+                    <p class="text-center pr-5">
+                      <v-icon class="mr-5" color="indigo lighten-2">
+                        mdi-phone
+                      </v-icon>
+                      {{ user[0].profile.phone }}
+                    </p>
+                    <p class="text-center">
+                      <v-icon class="mr-5" color="indigo lighten-2">
+                        mdi-email
+                      </v-icon>
+                      {{ user[0].profile.email }}
+                    </p>
+                  </div>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col cols="12" lg="6">
+            <v-card class="pa-10" rounded="xl" height="502">
+              <h5>วันเดือนปีเกิด</h5>
+              <p class="pl-5">{{ user[0].profile.Bdate }}</p>
+              <h5>อายุ</h5>
+              <p class="pl-5">ยังไม่ได้คิด ปี</p>
+              <h5>ที่อยู่</h5>
+              <p class="pl-5">{{ user[0].profile.Location }}</p>
+              <br />
+              <v-divider></v-divider>
+              <br />
+              <h5>ความสามารถพิเศษ</h5>
+              <div class="pa-2">
+                <v-chip
+                  class="ma-2 mr-2"
+                  color="blue"
+                  dark
+                  v-for="i in user[2].Ability"
+                  :key="i"
+                >
+                  {{ i.Ability }}
+                </v-chip>
               </div>
             </v-card>
           </v-col>
         </v-row>
-      </v-col>
-      <v-col cols="12" lg="6">
-        <v-card class="pa-10" rounded="xl" height="502">
-          <h5>วันเดือนปีเกิด</h5>
-          <p class="pl-5">{{ user.birthday }}</p>
-          <h5>อายุ</h5>
-          <p class="pl-5">{{ user.age }} ปี</p>
-          <h5>ที่อยู่</h5>
-          <p class="pl-5">{{ user.address }}</p>
-          <br />
-          <v-divider></v-divider>
-          <br />
-          <h5>ความสามารถพิเศษ</h5>
-          <div class="pa-2">
-            <v-chip
-              class="ma-2 mr-2"
-              color="blue"
-              dark
-              v-for="i in user.ability"
-              :key="i"
-            >
-              {{ i }}
-            </v-chip>
-          </div>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-card class="pa-10" rounded="xl">
-          <h4>ครูที่ปรึกษา</h4>
-          <div class="px-5 pt-5 d-block text-center">
-            <p v-for="i in user.advisor" :key="i">
-              <v-icon class="mr-5" color="indigo lighten-2">
-                mdi-account
-              </v-icon>
-              {{ i }}
-            </p>
-          </div>
-        </v-card>
-      </v-col>
-      <v-col cols="12">
-        <v-card class="pa-10" rounded="xl">
-          <h4>ผู้ปกครอง</h4>
-          <v-row d-flex justify="center">
-            <v-col cols="12" lg="6" align-self="center">
-              <div class="px-10">
-                <h4 class="pl-5">{{ user.parent.th_name }}</h4>
-                <h4 class="pl-5">{{ user.parent.en_name }}</h4>
+        <v-row>
+          <v-col cols="12">
+            <v-card class="pa-10" rounded="xl">
+              <h4>ครูที่ปรึกษา</h4>
+              <div class="px-5 pt-5 d-block text-center">
+                <p v-for="i in advisor" :key="i">
+                  <v-icon class="mr-5" color="indigo lighten-2">
+                    mdi-account
+                  </v-icon>
+                  {{ i.fullnameTH }}
+                </p>
               </div>
-            </v-col>
-            <v-col cols="12" lg="6">
-              <p class="pl-5">เพศ {{ user.parent.sex }}</p>
-              <p class="pl-5">โทรศัพท์ {{ user.parent.phone }}</p>
-              <p class="pl-5">ความสัมพันธ์ {{ user.parent.relation }}</p>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+            </v-card>
+          </v-col>
+          <v-col cols="12">
+            <v-card class="pa-10" rounded="xl">
+              <h4>ผู้ปกครอง</h4>
+              <v-row d-flex justify="center">
+                <v-col cols="12" lg="6" align-self="center">
+                  <div class="px-10">
+                    <h4 class="pl-5">
+                      {{
+                        user[1].dependent.Fname + " " + user[1].dependent.Lname
+                      }}
+                    </h4>
+                    <h4 class="pl-5">{{ user[1].dependent.Nickname }}</h4>
+                  </div>
+                </v-col>
+                <v-col cols="12" lg="6">
+                  <p class="pl-5">โทรศัพท์ {{ user[1].dependent.phone }}</p>
+                  <p class="pl-5">
+                    ความสัมพันธ์ {{ user[1].dependent.relation }}
+                  </p>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-container v-else>
+        <h1>ข้อมูลส่วนตัว</h1>
+        <div class="text-center text-muted py-16">
+          <h1>กำลังโหลด</h1>
+        </div>
+      </v-container>
+    </v-main>
+  </v-content>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
-      user: {
-        th_name: "xxxxxxxxxx xxxxxxx",
-        en_name: "xxxxxxxxxx xxxxxxx",
-        nickname: "xxxxxx",
-        student_id: "xxxxx",
-        sex: "xxx",
-        citizen_id: "x xxxx xxxxx xx x",
-        birthday: "xx/xx/xxxx",
-        age: "xx",
-        class: "ม. x/x",
-        phone: "xxxxxxxxxx",
-        email: "xxxxxxxxxx xxxxxxx",
-        gpa: "x.xx",
-        advisor: ["xxxxxxxxxx xxxxxxx", "xxxxxxxxxx xxxxxxx"],
-        address: "xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxx",
-        ability: ["xxxx", "xxxxxxx", "xx"],
-        parent: {
-          th_name: "xxxxxxxxxx xxxxxxx",
-          en_name: "aaaaaaaaaaa  aaaaaaaa",
-          sex: "xxxx",
-          phone: "xxxxxxxxxx",
-          relation: "xxxxxx",
-        },
-      },
+      user: "Loading",
+      classroom: "",
+      advisor: "",
     };
+  },
+  methods: {
+    menuSelect(select) {
+      if (select == 1) this.$router.push({ name: "StudentHome" });
+      else if (select == 3) this.$router.push({ name: "Score" });
+      else if (select == 4) this.$router.push({ name: "GradeView" });
+      else if (select == 5) this.$router.push({ name: "TeacherInfo" });
+      else if (select == 6) this.$router.push({ name: "VoteTeacher" });
+    },
+    async fetchProfileData() {
+      axios
+        .get("/user/student/get/profile", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            CitizenID: this.userData.id,
+          },
+        })
+        .then((res) => {
+          if (res.status) {
+            this.user = res.data.data;
+            axios
+              .get("/user/student/get/advisor", {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+                },
+                params: {
+                  ClassroomID: this.user[0].profile.ClassroomID,
+                },
+              })
+              .then((res) => {
+                if (res.status) {
+                  this.advisor = res.data.data;
+                }
+              });
+
+            axios
+              .get("/user/student/classroom", {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+                },
+                params: {
+                  ClassroomID: this.user[0].profile.ClassroomID,
+                },
+              })
+              .then((res) => {
+                if (res.status) {
+                  this.classroom = res.data.data;
+                  console.log(this.classroom);
+                }
+              });
+          }
+        });
+    },
+  },
+  computed: {
+    userData() {
+      return this.$store.getters.getUserData;
+    },
+  },
+  created() {
+    this.fetchProfileData();
   },
 };
 </script>
 
 <style scoped>
+.content {
+  max-width: 1300px;
+  margin: 50px auto;
+}
 .outlined {
   border: 4px dotted #81c784;
   border-radius: 100%;
