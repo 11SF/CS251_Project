@@ -100,7 +100,7 @@
         <div class="text-center text-muted mt-16" v-else-if="table == '-'">
           <h1>ไม่พบข้อมูลผลการเรียน</h1>
         </div>
-        <v-card class="pa-10 mt-5" rounded="lg" v-else>
+        <v-card class=" pa-lg-10 pa-1 mt-5" rounded="lg" v-else>
           <h2 class="text-center">
             ชั้นมัธยมศึกษาปีที่ {{ room_detail.Level }} ภาคการศึกษาที่
             {{ term + "/" + room_detail.Year }}
