@@ -49,7 +49,7 @@ const routes = [
   // Teacher Path
   {
     path: "/teacher",
-    name: "Teacher",
+    name: "TeacherHome",
     component: () => import("../views/Teacher/TeacherHome.vue"),
   },
   {
@@ -66,6 +66,11 @@ const routes = [
     path: "/teacher/studentview",
     name: "StudentView",
     component: () => import("../views/Teacher/StudentView.vue"),
+  },
+  {
+    path: "/teacher/studentview/information",
+    name: "Student",
+    component: () => import("../views/Teacher/Student.vue"),
   },
   //Academic Path
   {
