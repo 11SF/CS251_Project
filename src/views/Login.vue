@@ -34,7 +34,7 @@
               เข้าสู่ระบบ
             </button>
           </div>
-          <p class="text-end">ลืมรหัสผ่านติดต่อ 191</p>
+          <p class="text-end">ลืมรหัสผ่านติดต่อฝ่ายวิชาการ</p>
         </form>
       </v-card>
     </v-col>
@@ -90,7 +90,5 @@ export default {
 </script>
 
 <style scoped>
-.content {
-  background-image: url("https://cdn.discordapp.com/attachments/821677668311367691/831543855463530496/rose.png");
-}
+
 </style>
