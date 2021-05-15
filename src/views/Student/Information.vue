@@ -69,7 +69,7 @@
                 <v-col cols="12" lg="5" align-self="center" class="text-center">
                   <v-avatar size="208" class="d-flex mx-auto outlined">
                     <img
-                      src="https://scontent.fbkk5-7.fna.fbcdn.net/v/t1.6435-1/p320x320/107698195_2967815813287518_541907919760258090_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeE3aO3DclaFIA835EOawoRtfGJcX_stZBh8Ylxf-y1kGO4umJMtOdZxjXdSJ5N0IJpcc6Rpj9i_eCT85UwALEOj&_nc_ohc=EFiQGU8_0UkAX9LrfQz&_nc_ht=scontent.fbkk5-7.fna&tp=6&oh=bb47ded825db3f157b54119d14141464&oe=609C1869"
+                      src="https://scontent.fbkk5-7.fna.fbcdn.net/v/t1.6435-9/107698195_2967815813287518_541907919760258090_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeE3aO3DclaFIA835EOawoRtfGJcX_stZBh8Ylxf-y1kGO4umJMtOdZxjXdSJ5N0IJpcc6Rpj9i_eCT85UwALEOj&_nc_ohc=OtV9XSYMS7IAX8YU1tP&_nc_ht=scontent.fbkk5-7.fna&oh=2fb19b59f5eb1c7f0e3709ae9da02a35&oe=60C4AAF6"
                       alt="John"
                     />
                   </v-avatar>
@@ -215,7 +215,7 @@ export default {
       else if (select == 5) this.$router.push({ name: "TeacherInfo" });
       else if (select == 6) this.$router.push({ name: "VoteTeacher" });
     },
-    async fetchProfileData() {
+    fetchProfileData() {
       axios
         .get("/user/student/get/profile", {
           headers: {
