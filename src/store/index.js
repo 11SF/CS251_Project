@@ -10,6 +10,7 @@ export default new Vuex.Store({
     loginStatus : "notLogin",
     userData : "",
     toggle: false,
+    studentSelect: ""
   },
   mutations: {
     LOGIN(state,payload) {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     SETTOGGLE(state) {
       state.toggle = !state.toggle;
+    },
+    STUDENTSELECT(state,payload) {
+      state.studentSelect = payload
     }
   },
   actions: {
@@ -50,6 +54,9 @@ export default new Vuex.Store({
     toggle(context) {
       context.commit('SETTOGGLE')
     },
+    studentSelect(context,StudentCitizenID) {
+      context.commit('STUDENTSELECT', StudentCitizenID)
+    }
   },
   getters: {
     getLoginStatus(state) {
@@ -70,6 +77,9 @@ export default new Vuex.Store({
     getToggle(state) {
       return state.toggle
     },
+    getStudentSelect(state) {
+      return state.studentSelect
+    }
   },
   computed: {
     localStorage_data() {
