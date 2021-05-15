@@ -6,7 +6,7 @@ import vuetify from "./plugins/vuetify";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios'
 
-axios.defaults.baseURL = "http://localhost:5000/api"
+axios.defaults.baseURL = "http://35.197.141.239:5000/api"
 
 Vue.config.productionTip = false;
 
