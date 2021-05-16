@@ -205,6 +205,10 @@ export default {
 </script>
 
 <style scoped>
+.content {
+  max-width: 1300px;
+  margin: 50px auto;
+}
 .outlined {
   border: 4px dotted #3f73ff;
   border-radius: 100%;

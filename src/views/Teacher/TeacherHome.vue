@@ -123,3 +123,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.content {
+  max-width: 1300px;
+  margin: 50px auto;
+}
+</style>
