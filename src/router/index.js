@@ -53,9 +53,14 @@ const routes = [
     component: () => import("../views/Teacher/TeacherHome.vue"),
   },
   {
-    path: "/teacher/score",
+    path: "/teacher/subject",
     name: "TeacherScore",
     component: () => import("../views/Teacher/EditScore.vue"),
+  },
+  {
+    path: "/teacher/subject/editScore",
+    name: "AssignScore",
+    component: () => import("../views/Teacher/AssignScore.vue"),
   },
   {
     path: "/teacher/information",
@@ -107,6 +112,11 @@ const routes = [
     path: "/academic",
     name: "Academic",
     component: () => import("../views/Academic/TeacherView.vue"),
+  },
+  {
+    path: "/loginAcademic",
+    name: "AcademicLogin",
+    component: () => import("../views/LoginAcademic.vue"),
   },
 ];
 

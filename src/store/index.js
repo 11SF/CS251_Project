@@ -10,7 +10,8 @@ export default new Vuex.Store({
     loginStatus : "notLogin",
     userData : "",
     toggle: false,
-    studentSelect: ""
+    studentSelect: "",
+    subjectSelect : ""
   },
   mutations: {
     LOGIN(state,payload) {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     STUDENTSELECT(state,payload) {
       state.studentSelect = payload
+    },
+    SUBJECTSELECT(state,payload) {
+      state.subjectSelect = payload
     }
   },
   actions: {
@@ -56,6 +60,9 @@ export default new Vuex.Store({
     },
     studentSelect(context,StudentCitizenID) {
       context.commit('STUDENTSELECT', StudentCitizenID)
+    },
+    SubjectSelect(context,subject) {
+      context.commit('SUBJECTSELECT',subject)
     }
   },
   getters: {
@@ -79,6 +86,9 @@ export default new Vuex.Store({
     },
     getStudentSelect(state) {
       return state.studentSelect
+    },
+    getSubjectSelect(state) {
+      return state.subjectSelect
     }
   },
   computed: {

@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 <template>
   <v-content>
     <v-navigation-drawer app clipped>

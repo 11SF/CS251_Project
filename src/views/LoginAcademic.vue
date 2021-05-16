@@ -1,15 +1,14 @@
 <template>
-  <v-row align-content="center" class="content">
+    <v-row align-content="center" class="content">
     <v-col>
       <v-card max-width="500" class="mx-auto pa-10" rounded="lg" ref="form">
-        <h1 class="text-center mb-5">เข้าสู่ระบบ</h1>
+        <h1 class="text-center mb-5">เข้าสู่ระบบ (สำหรับฝ่ายวิชาการ)</h1>
         <form>
           <label for="FormControlInput1" class="form-label">ชื่อผู้ใช้</label>
           <input
             type="text"
             class="form-control mb-5"
             id="FormControlInput1"
-            placeholder="รหัสนักเรียน"
             v-model="forms.username"
             required
           />
@@ -23,11 +22,10 @@
             required
           />
 
-          <div class="d-grid gap-2 mb-4  justify-content-start">
+          <div class="d-grid gap-2 mb-2 mt-2 justify-content-start">
             <v-radio-group v-model="forms.role" hide-details row>
               <v-radio value="Student" label="Student"></v-radio>
               <v-radio value="Staff" label="Staff"></v-radio>
-              <v-radio value="Academic" label="ฝ่ายวิชาการ"></v-radio>
             </v-radio-group>
           </div>
           <div class="d-grid gap-2 mb-2 mt-2">
@@ -35,7 +33,7 @@
               เข้าสู่ระบบ
             </button>
           </div>
-          <p class="text-end ma-0">ลืมรหัสผ่านติดต่อฝ่ายวิชาการ</p>
+          <p class="text-end">ลืมรหัสผ่านติดต่อฝ่ายวิชาการ</p>
         </form>
       </v-card>
     </v-col>
@@ -73,8 +71,6 @@ export default {
         this.$router.push({ name: "StudentHome" });
       else if (this.userData.role == "Staff")
         this.$router.push({ name: "TeacherHome" });
-        else if (this.userData.role == "Academic")
-        this.$router.push({ name: "Academic" });
     } else {
       this.$router.push({ name: "Login" });
     }
@@ -86,14 +82,12 @@ export default {
           this.$router.push({ name: "StudentHome" });
         else if (this.userData.role == "Staff")
           this.$router.push({ name: "TeacherHome" });
-        else if (this.userData.role == "Academic")
-          this.$router.push({ name: "Academic" });
       }
     },
   },
 };
 </script>
 
-<style scoped>
+<style>
 
 </style>
