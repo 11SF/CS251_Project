@@ -74,7 +74,7 @@ export default {
       else if (this.userData.role == "Staff")
         this.$router.push({ name: "TeacherHome" });
         else if (this.userData.role == "Academic")
-        this.$router.push({ name: "Academic" });
+        this.$router.push({ name: "AcademicHome" });
     } else {
       this.$router.push({ name: "Login" });
     }
@@ -87,7 +87,7 @@ export default {
         else if (this.userData.role == "Staff")
           this.$router.push({ name: "TeacherHome" });
         else if (this.userData.role == "Academic")
-          this.$router.push({ name: "Academic" });
+          this.$router.push({ name: "AcademicHome" });
       }
     },
   },

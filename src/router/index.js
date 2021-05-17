@@ -80,43 +80,48 @@ const routes = [
   //Academic Path
   {
     path: "/academic",
-    name: "Academic",
+    name: "AcademicHome",
     component: () => import("../views/Academic/AcademicHome.vue"),
   },
   {
     path: "/academic/ClassView",
-    name: "Academic",
+    name: "ClassView",
     component: () => import("../views/Academic/ClassView.vue"),
   },
   {
     path: "/academic/EditInformation",
-    name: "Academic",
+    name: "EditInformation",
     component: () => import("../views/Academic/EditInformation.vue"),
   },
   {
     path: "/academic/Information",
-    name: "Academic",
+    name: "AcademicInformation",
     component: () => import("../views/Academic/Information.vue"),
   },
   {
     path: "/academic/SubjectView",
-    name: "Academic",
+    name: "SubjectView",
     component: () => import("../views/Academic/SubjectView.vue"),
   },
   {
     path: "/academic/TeacherTime",
-    name: "Academic",
+    name: "TeacherTime",
     component: () => import("../views/Academic/TeacherTime.vue"),
   },
   {
-    path: "/academic",
-    name: "Academic",
+    path: "/academic/TeacherView",
+    name: "TeacherView",
     component: () => import("../views/Academic/TeacherView.vue"),
   },
   {
     path: "/loginAcademic",
     name: "AcademicLogin",
     component: () => import("../views/LoginAcademic.vue"),
+  },
+  {
+    path: "/academic/setting",
+    name: "Setting",
+    component: () => import("../views/Academic/Setting.vue"),
   },
 ];
 

@@ -135,6 +135,7 @@ export default {
       else if (select == 4) this.$router.push({ name: "GradeView" });
       else if (select == 2) this.$router.push({ name: "StudentInformation" });
       else if (select == 6) this.$router.push({ name: "VoteTeacher" });
+
     },
     fetchDepartment() {
       axios

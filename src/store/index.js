@@ -11,7 +11,14 @@ export default new Vuex.Store({
     userData : "",
     toggle: false,
     studentSelect: "",
-    subjectSelect : ""
+    subjectSelect : "",
+    academicData: {
+      Term: "",
+      Year: ""
+    },
+    systemData: {
+      poll: ""
+    }
   },
   mutations: {
     LOGIN(state,payload) {
@@ -36,6 +43,13 @@ export default new Vuex.Store({
     },
     SUBJECTSELECT(state,payload) {
       state.subjectSelect = payload
+    },
+    ACADEMICSTATE(state,payload) {
+      state.academicData.Term = payload.term[0].Status
+      state.academicData.Year = payload.year[0].Status
+    },
+    POLLSTATE(state,payload) {
+      state.systemData.poll = payload
     }
   },
   actions: {
@@ -63,6 +77,45 @@ export default new Vuex.Store({
     },
     SubjectSelect(context,subject) {
       context.commit('SUBJECTSELECT',subject)
+    },
+    academicData(context) {
+      let result = {
+        "year" : "",
+        "term" : ""
+      }
+      axios.get('/user/get/state',{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+        },
+        params: {
+          Name: "year"
+        }
+      }).then(res=> {
+        result.year = res.data.data
+        axios.get('/user/get/state',{
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            Name: "term"
+          }
+        }).then(res=> {
+          result.term = res.data.data
+          context.commit('ACADEMICSTATE',result)
+        })
+      })
+    },
+    pollState(context) {
+      axios.get('/user/get/state',{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+        },
+        params: {
+          Name: "poll"
+        }
+      }).then(res => {
+        context.commit('POLLSTATE',res.data.data[0].Status)
+      })
     }
   },
   getters: {
@@ -89,6 +142,12 @@ export default new Vuex.Store({
     },
     getSubjectSelect(state) {
       return state.subjectSelect
+    },
+    getAcademicState(state) {
+      return state.academicData
+    },
+    getPollState(state) {
+      return state.systemData.poll
     }
   },
   computed: {

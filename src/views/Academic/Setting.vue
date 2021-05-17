@@ -36,7 +36,7 @@
 
         <v-list-item link @click="menuSelect(4)">
           <v-list-item-icon>
-            <v-icon color="blue">mdi-star</v-icon>
+            <v-icon>mdi-star</v-icon>
           </v-list-item-icon>
           <v-list-item-title>จัดการรายวิชา</v-list-item-title>
         </v-list-item>
@@ -54,69 +54,25 @@
           </v-list-item-icon>
           <v-list-item-title>จัดการข้อมูลอาจารย์</v-list-item-title>
         </v-list-item>
-        
+
         <v-list-item link @click="menuSelect(7)">
           <v-list-item-icon>
-            <v-icon>mdi-star</v-icon>
+            <v-icon color="blue">mdi-star</v-icon>
           </v-list-item-icon>
           <v-list-item-title>ตั้งค่าระบบ</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-main class="content pa-0">
+    <v-main class="pa-0 content">
       <v-container class="mt-10">
-        <h1>จัดการรายวิชา</h1>
-        <v-row>
-          <v-col cols="12" v-for="i in subjectList" :key="i">
-            <v-card class="pa-10" rounded="lg" v-if="i != ''">
-              <h4>มัธยมศึกษาปีที่ {{ i[0].level }}</h4>
-              <v-row>
-                <v-col lg="4" cols="12" v-for="j in i" :key="j">
-                  <v-card>
-                    <v-card-title>{{j.SubjectName}}</v-card-title>
-                    <v-subheader>รหัสวิชา{{" " + j.SubjectID}}</v-subheader>
-                    <v-subheader
-                      >ครูผู้สอน{{" " + j.TeacherName}}</v-subheader
-                    >
-                    <v-card-actions class="d-flex justify-content-end">
-                      <v-btn text color="teal accent-4" @click="reveal = true">
-                        แก้ไขข้อมูล
-                      </v-btn>
-                      <v-btn text color="red" @click="reveal = true">
-                        ลบรายวิชา
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-col>
-              </v-row>
-              <div class="d-flex justify-content-end">
-                <v-btn class="mx-2" fab dark large color="cyan">
-                  <v-icon dark> mdi-plus </v-icon>
-                </v-btn>
-              </div>
-            </v-card>
-          </v-col>
-        </v-row>
+        <h1>Setting Page</h1>
       </v-container>
     </v-main>
   </v-content>
 </template>
 
 <script>
-import axios from "axios"
 export default {
-  data() {
-    return {
-      subjectList: {
-        "m1": [],
-        "m2": [],
-        "m3": [],
-        "m4": [],
-        "m5": [],
-        "m6": [],
-      }
-    }
-  },
   methods: {
     menuSelect(select) {
       if (select == 1) this.$router.push({ name: "AcademicHome" });
@@ -127,37 +83,21 @@ export default {
       else if (select == 6) this.$router.push({ name: "TeacherView" });
       else if (select == 7) this.$router.push({ name: "Setting" });
     },
-    fetchSubject() {
-      axios.get("/user/subject/getAll",{
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
-          },
-      }).then(res=> {
-        this.groupSubjectbyLevel(res.data.data)
-      })
-    },
-    groupSubjectbyLevel(subjects) {
-      subjects.forEach(e => {
-        switch (e.level) {
-          case "1": this.subjectList.m1.push(e); break;
-          case "2": this.subjectList.m2.push(e); break;
-          case "3": this.subjectList.m3.push(e); break;
-          case "4": this.subjectList.m4.push(e); break;
-          case "5": this.subjectList.m5.push(e); break;
-          case "6": this.subjectList.m6.push(e); break;
-        }
-      });
-      console.log(this.subjectList);
-    }
   },
-  created() {
-    this.fetchSubject()
-  }
 };
 </script>
+
 <style scoped>
 .content {
   max-width: 1300px;
   margin: 50px auto;
+}
+.outlined {
+  border: 4px dotted #81c784;
+  border-radius: 100%;
+  padding: 100px;
+}
+.outlined img {
+  padding: 10px;
 }
 </style>
