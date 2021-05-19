@@ -406,7 +406,7 @@ export default {
             fullnameTH: this.room.Fname,
             Level: this.room.Level,
             Room: this.room.Room,
-            Year: this.$store.getters.getAcademicState.year,
+            Year: this.$store.getters.getAcademicState.Year,
           },
         })
         .then(() => {
