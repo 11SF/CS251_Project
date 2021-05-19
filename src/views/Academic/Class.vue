@@ -163,7 +163,11 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="4">
-                  <v-btn width="100%" @click="fetchTeacher(classSelect.fullnameTH)">ค้นหา</v-btn>
+                  <v-btn
+                    width="100%"
+                    @click="fetchTeacher(classSelect.fullnameTH)"
+                    >ค้นหา</v-btn
+                  >
                 </v-col>
               </v-row>
               <v-row v-if="teacherList != ''">
@@ -237,7 +241,9 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="4">
-                <v-btn width="100%" @click="fetchTeacher(room.Fname)">ค้นหา</v-btn>
+                <v-btn width="100%" @click="fetchTeacher(room.Fname)"
+                  >ค้นหา</v-btn
+                >
               </v-col>
             </v-row>
             <v-row v-if="teacherList != ''">
@@ -292,7 +298,6 @@ export default {
         CitizenID: "",
       },
       keyword: "",
-
     };
   },
   methods: {
@@ -357,7 +362,7 @@ export default {
         })
         .then((res) => {
           this.teacherList = res.data;
-          this.keyword = ""
+          this.keyword = "";
         });
     },
     editClassroom() {
@@ -401,7 +406,7 @@ export default {
             fullnameTH: this.room.Fname,
             Level: this.room.Level,
             Room: this.room.Room,
-            Year: this.$store.getters.getAcademicState.Year,
+            Year: this.$store.getters.getAcademicState.year,
           },
         })
         .then(() => {
@@ -415,23 +420,25 @@ export default {
       this.room.Fname = "";
       this.room.CitizenID = "";
       this.classSelect = "";
-      this.teacherList = ""
+      this.teacherList = "";
     },
     log() {
       console.log(this.classSelect);
     },
     deleteStudent(ID) {
-        axios.delete("/user/student/delete",{
-            headers: {
+      axios
+        .delete("/user/student/delete", {
+          headers: {
             Authorization: `Bearer ${localStorage.getItem("userKey")}`,
           },
           params: {
             ID: ID,
           },
-        }).then(()=> {
-            this.fetchData(this.classSelect)
         })
-    }
+        .then(() => {
+          this.fetchData(this.classSelect);
+        });
+    },
   },
   created() {
     this.fetchRoom();
