@@ -6,12 +6,6 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Test",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Test.vue"),
-  },
-  {
-    path: "/login",
     name: "Login",
     component: () => import("../views/Login.vue"),
   },
@@ -88,11 +82,11 @@ const routes = [
     name: "ClassView",
     component: () => import("../views/Academic/ClassView.vue"),
   },
-  {
-    path: "/academic/EditInformation",
-    name: "EditInformation",
-    component: () => import("../views/Academic/EditInformation.vue"),
-  },
+  // {
+  //   path: "/academic/EditInformation",
+  //   name: "EditInformation",
+  //   component: () => import("../views/Academic/EditInformation.vue"),
+  // },
   {
     path: "/academic/Information",
     name: "AcademicInformation",
@@ -122,6 +116,11 @@ const routes = [
     path: "/academic/setting",
     name: "Setting",
     component: () => import("../views/Academic/Setting.vue"),
+  },
+  {
+    path: "/academic/class",
+    name: "Class",
+    component: () => import("../views/Academic/Class.vue"),
   },
 ];
 

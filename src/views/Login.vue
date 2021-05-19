@@ -15,7 +15,7 @@
           />
           <label for="FormControlInput2" class="form-label">รหัสผ่าน</label>
           <input
-            type="text"
+            type="password"
             class="form-control"
             id="FormControlInput2"
             placeholder="เลขบัตรประชาชน"

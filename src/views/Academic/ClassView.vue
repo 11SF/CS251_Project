@@ -32,8 +32,6 @@
           <v-list-item-title>ข้อมูลส่วนตัว</v-list-item-title>
         </v-list-item>
 
-        
-
         <v-list-item link @click="menuSelect(4)">
           <v-list-item-icon>
             <v-icon>mdi-star</v-icon>
@@ -67,7 +65,7 @@
       <v-container class="mt-10">
         <h1>จัดการชั้นเรียน</h1>
         <div class="d-flex justify-content-end mt-10">
-          <v-btn color="success">เพิ่มระดับชั้น</v-btn>
+          <v-btn color="success" @click="addLevel = true">เพิ่มระดับชั้น</v-btn>
         </div>
         <table class="table">
           <thead>
@@ -84,7 +82,7 @@
               </td>
               <td class="text-center align-middle">10</td>
               <td class="text-center">
-                <v-btn color="primary" class="mb-5" @click="dialog = true" block
+                <v-btn color="primary" class="mb-5" @click="goClass(i)" block
                   >ดูข้อมูล</v-btn
                 >
                 <v-btn color="red" dark block>ลบ</v-btn>
@@ -224,13 +222,77 @@
             </v-container>
           </v-card>
         </v-dialog>
+
+        <v-dialog
+          v-model="addLevel"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
+        >
+          <v-card>
+            <v-toolbar dark color="primary">
+              <v-btn icon dark @click="addLevel = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              <v-toolbar-title>เพิ่มชั้นเรียน</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn dark text @click="(addLevel = false), save()">
+                  Save
+                </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+            <v-container>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    class="mt-5"
+                    v-model="level.idLevel"
+                    label="ระดับชั้น"
+                    type="number"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="8">
+                  <v-text-field
+                    v-model="level.head"
+                    label="หัวหน้าระดับ"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="4">
+                  <v-btn width="100%" @click="fetchTeacher()">ค้นหา</v-btn>
+                </v-col>
+              </v-row>
+              <v-row v-if="teacherList != ''">
+                <v-col cols="12" lg="6" v-for="i in teacherList" :key="i">
+                  <v-card class="pa-5 d-flex" width="500">
+                    <v-avatar class="profile" color="grey" size="164" tile>
+                      <v-img :src="userImageMock()"></v-img>
+                    </v-avatar>
+                    <div class="pa-5 flex-fill">
+                      <h5>{{ i.FnameTH + " " + i.LnameTH }}</h5>
+                      <p>กลุ่มสาระการเรียนรู้{{ i.departmen_name }}</p>
+                      <v-btn
+                        color="primary"
+                        class="mt-8"
+                        block
+                        @click="selectTeacher(i)"
+                        >เลือก</v-btn
+                      >
+                    </div>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-dialog>
       </v-container>
     </v-main>
   </v-content>
 </template>
 
 <script>
-import EditStudentInformation from "../Academic/EditInformation";
 import axios from "axios";
 export default {
   data() {
@@ -241,10 +303,14 @@ export default {
       planItems: ["วิทย์-คณิต", "ศิลป์-คำนวน"],
       planSelect: "วิทย์-คณิต",
       LevelList: "",
+      addLevel: false,
+      level: {
+        idLevel: "",
+        head: "",
+        citizenID: "",
+      },
+      teacherList: "",
     };
-  },
-  components: {
-    EditStudentInformation,
   },
   methods: {
     menuSelect(select) {
@@ -265,6 +331,56 @@ export default {
         })
         .then((res) => {
           this.LevelList = res.data.data;
+          console.log(this.LevelList);
+        });
+    },
+    goClass(i) {
+      console.log(i);
+      this.$router.push({ name: "Class" });
+      this.$store.dispatch("classSelect", i.idLevel);
+    },
+    fetchTeacher() {
+      axios
+        .get("/user/teacher/get/search", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            keyword: this.level.head,
+          },
+        })
+        .then((res) => {
+          this.teacherList = res.data;
+          console.log(this.teacherList);
+        });
+    },
+    userImageMock() {
+      return (
+        "https://randomuser.me/api/portraits/men/" +
+        Math.floor(Math.random() * 100) +
+        ".jpg"
+      );
+    },
+    selectTeacher(i) {
+      this.level.head = i.FnameTH + " " + i.LnameTH;
+      this.level.CitizenID = i.CitizenID;
+    },
+    save() {
+      axios
+        .get("/user/level/add", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            idLevel: this.level.idLevel,
+            CitizenID: this.level.CitizenID,
+          },
+        })
+        .then(() => {
+          this.level.idLevel = "";
+          this.level.head = "";
+          this.level.CitizenID = "";
+          this.fetchLevel();
         });
     },
   },

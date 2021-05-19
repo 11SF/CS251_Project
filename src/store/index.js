@@ -18,7 +18,8 @@ export default new Vuex.Store({
     },
     systemData: {
       poll: ""
-    }
+    },
+    classSelect: ""
   },
   mutations: {
     LOGIN(state,payload) {
@@ -50,6 +51,9 @@ export default new Vuex.Store({
     },
     POLLSTATE(state,payload) {
       state.systemData.poll = payload
+    },
+    CLASSSELECT(state,payload) {
+      state.classSelect = payload
     }
   },
   actions: {
@@ -116,6 +120,9 @@ export default new Vuex.Store({
       }).then(res => {
         context.commit('POLLSTATE',res.data.data[0].Status)
       })
+    },
+    classSelect(context,ClassroomID) {
+        context.commit('CLASSSELECT',ClassroomID)
     }
   },
   getters: {
@@ -148,6 +155,9 @@ export default new Vuex.Store({
     },
     getPollState(state) {
       return state.systemData.poll
+    },
+    getClassSelect(state) {
+      return state.classSelect
     }
   },
   computed: {
