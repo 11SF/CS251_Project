@@ -19,7 +19,8 @@ export default new Vuex.Store({
     systemData: {
       poll: ""
     },
-    classSelect: ""
+    classSelect: "",
+    roomSelect: ""
   },
   mutations: {
     LOGIN(state,payload) {
@@ -54,6 +55,9 @@ export default new Vuex.Store({
     },
     CLASSSELECT(state,payload) {
       state.classSelect = payload
+    },
+    ROOMSELECT(state,payload) {
+      state.roomSelect = payload
     }
   },
   actions: {
@@ -123,6 +127,9 @@ export default new Vuex.Store({
     },
     classSelect(context,ClassroomID) {
         context.commit('CLASSSELECT',ClassroomID)
+    },
+    roomSelect(context,roomData) {
+      context.commit("ROOMSELECT",roomData)
     }
   },
   getters: {
@@ -158,6 +165,9 @@ export default new Vuex.Store({
     },
     getClassSelect(state) {
       return state.classSelect
+    },
+    getRoomSelect(state) {
+      return state.roomSelect
     }
   },
   computed: {

@@ -32,7 +32,9 @@
                 block
                 >ดูข้อมูล</v-btn
               >
-              <v-btn color="warning" dark block>จัดตารางเรียน</v-btn>
+              <v-btn @click="roomSelect(i)" color="warning" dark block
+                >จัดตารางเรียน</v-btn
+              >
             </td>
           </tr>
         </tbody>
@@ -445,6 +447,14 @@ export default {
           this.fetchData(this.classSelect);
         });
     },
+    roomSelect(i) {
+      this.$store.dispatch("roomSelect", i);
+      this.$router.push("TimeTable")
+    },
+    addStudent(i) {
+      this.$store.dispatch("roomSelect", i);
+      this.$router.push("addStudent")
+    }
   },
   created() {
     this.fetchRoom();

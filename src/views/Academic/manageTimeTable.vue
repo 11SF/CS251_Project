@@ -2,15 +2,25 @@
   <v-content>
     <div class="container">
       <v-card class="mb-5 pa-5">
+        <h3>
+          {{
+            "ชั้นมัธยมศึกษาปีที่ " + roomSelect.Level + "/" + roomSelect.Room
+          }}
+        </h3>
         <v-card-title>เลือกรายวิชา</v-card-title>
         <div class="text-end">
           <v-btn color="primary">เพิ่มรายวิชา</v-btn>
           <v-list subheader two-line flat>
             <v-subheader>รายวิชาที่เลือก</v-subheader>
+            <v-list-item v-for="i in selectSubject" :key="i">
+              <v-list-item-content>
+                {{ "วิชา " + i.S_name }}
+              </v-list-item-content>
+            </v-list-item>
           </v-list>
         </div>
       </v-card>
-      <table class="table table-hover table-bordered border-dark">
+      <table class="table table-hover table-bordered border-dark" width="100">
         <thead class="text-center">
           <tr>
             <th>วัน\คาบที่</th>
@@ -31,78 +41,498 @@
         <tbody>
           <tr>
             <th scope="col">จันทร์</th>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p1"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p2"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p3"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p4"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p5"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p6"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p7"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p8"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p9"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p10"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p11"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d1.p12"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="col">อังคาร</th>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p1"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p2"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p3"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p4"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p5"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p6"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p7"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p8"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p9"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p10"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p11"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d2.p12"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="col">พุธ</th>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p1"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p2"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p3"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p4"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p5"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p6"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p7"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p8"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p9"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p10"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p11"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d3.p12"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="col">พฤหัสบดี</th>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p1"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p2"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p3"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p4"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p5"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p6"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p7"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p8"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p9"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p10"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p11"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d4.p12"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="col">ศุกร์</th>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
-            <td><v-select></v-select></td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p1"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p2"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p3"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p4"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p5"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p6"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p7"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p8"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p9"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p10"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p11"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
+            <td class="col-1">
+              <v-select
+                v-model="table.d5.p12"
+                :items="selectSubject"
+                item-text="S_name"
+                item-value="S_ID"
+              ></v-select>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -114,7 +544,155 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  data() {
+    return {
+      roomSelect: this.$store.getters.getRoomSelect,
+      aLLSubject: "",
+      selectSubject: "",
+      subjectList: {
+        m1: [],
+        m2: [],
+        m3: [],
+        m4: [],
+        m5: [],
+        m6: [],
+      },
+      table: {
+        d1: {
+          p1: "",
+          p2: "",
+          p3: "",
+          p4: "",
+          p5: "",
+          p6: "",
+          p7: "",
+          p8: "",
+          p9: "",
+          p10: "",
+          p11: "",
+          p12: "",
+        },
+        d2: {
+          p1: "",
+          p2: "",
+          p3: "",
+          p4: "",
+          p5: "",
+          p6: "",
+          p7: "",
+          p8: "",
+          p9: "",
+          p10: "",
+          p11: "",
+          p12: "",
+        },
+        d3: {
+          p1: "",
+          p2: "",
+          p3: "",
+          p4: "",
+          p5: "",
+          p6: "",
+          p7: "",
+          p8: "",
+          p9: "",
+          p10: "",
+          p11: "",
+          p12: "",
+        },
+        d4: {
+          p1: "",
+          p2: "",
+          p3: "",
+          p4: "",
+          p5: "",
+          p6: "",
+          p7: "",
+          p8: "",
+          p9: "",
+          p10: "",
+          p11: "",
+          p12: "",
+        },
+        d5: {
+          p1: "",
+          p2: "",
+          p3: "",
+          p4: "",
+          p5: "",
+          p6: "",
+          p7: "",
+          p8: "",
+          p9: "",
+          p10: "",
+          p11: "",
+          p12: "",
+        },
+      },
+    };
+  },
+  methods: {
+    fetchSubject() {
+      axios
+        .get("/user/subject/getAll", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+        })
+        .then((res) => {
+          this.groupSubjectbyLevel(res.data.data);
+        });
+    },
+    groupSubjectbyLevel(subjects) {
+      subjects.forEach((e) => {
+        switch (e.level) {
+          case "1":
+            this.subjectList.m1.push(e);
+            break;
+          case "2":
+            this.subjectList.m2.push(e);
+            break;
+          case "3":
+            this.subjectList.m3.push(e);
+            break;
+          case "4":
+            this.subjectList.m4.push(e);
+            break;
+          case "5":
+            this.subjectList.m5.push(e);
+            break;
+          case "6":
+            this.subjectList.m6.push(e);
+            break;
+        }
+      });
+      console.log(this.subjectList);
+    },
+    getClassroomSubject() {
+      axios
+        .get("/user/student/get/subject", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            Term: this.$store.getters.getAcademicState.Term,
+            ClassroomID: this.$store.getters.getRoomSelect.ClassroomID,
+          },
+        })
+        .then((res) => {
+          if (res.data.status) {
+            this.selectSubject = res.data.data;
+          }
+        });
+    },
+  },
+  created() {
+    this.fetchSubject();
+    this.getClassroomSubject();
+  },
+};
 </script>
 
 <style>

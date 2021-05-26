@@ -127,6 +127,16 @@ const routes = [
     name: "TimeTable",
     component: () => import("../views/Academic/manageTimeTable.vue"),
   },
+  {
+    path: "/academic/addStudent",
+    name: "addStudent",
+    component: () => import("../views/Academic/addStudent.vue"),
+  },
+  {
+    path: "/academic/addTeacher",
+    name: "addTeacher",
+    component: () => import("../views/Academic/addTeacher.vue"),
+  },
 ];
 
 const router = new VueRouter({
