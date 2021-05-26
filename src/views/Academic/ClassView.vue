@@ -62,10 +62,12 @@
       </v-list>
     </v-navigation-drawer>
     <v-main class="content pa-0">
-      <v-container class="mt-10">
+      <v-container>
         <h1>จัดการชั้นเรียน</h1>
         <div class="d-flex justify-content-end mt-10">
-          <v-btn color="success" @click="addLevel = true">เพิ่มระดับชั้น</v-btn>
+          <v-btn color="success" @click="addLevel = true" disabled
+            >เพิ่มระดับชั้น</v-btn
+          >
         </div>
         <table class="table">
           <thead>
@@ -85,7 +87,6 @@
                 <v-btn color="primary" class="mb-5" @click="goClass(i)" block
                   >ดูข้อมูล</v-btn
                 >
-                <v-btn color="red" dark block>ลบ</v-btn>
               </td>
             </tr>
           </tbody>

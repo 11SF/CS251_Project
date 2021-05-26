@@ -6,7 +6,7 @@
         v-if="classSelect == ''"
       >
         <v-btn @click="back">ย้อนกลับ</v-btn>
-        <v-btn @click="addRoom = true">เพิ่มห้องเรียน</v-btn>
+        <v-btn @click="addRoom = true" color="success">เพิ่มห้องเรียน</v-btn>
       </div>
       <table class="table" v-if="classSelect == ''">
         <thead>
@@ -32,7 +32,7 @@
                 block
                 >ดูข้อมูล</v-btn
               >
-              <v-btn color="red" dark block>ลบ</v-btn>
+              <v-btn color="warning" dark block>จัดตารางเรียน</v-btn>
             </td>
           </tr>
         </tbody>
@@ -65,11 +65,17 @@
                 <v-btn color="success" @click="(editDialog = true), log()"
                   >แก้ไข</v-btn
                 >
+                <v-btn
+                  class="ml-5"
+                  color="warning"
+                  @click="(editDialog = true), log()"
+                  >เลื่อนระดับชั้น</v-btn
+                >
               </div>
             </v-card>
           </v-col>
         </v-row>
-        <div class="mt-10 d-flex justify-content-end">
+        <div class="mt-10 mb-3 d-flex justify-content-end">
           <v-btn color="primary">เพิ่มนักเรียน</v-btn>
         </div>
         <table class="table table-bordered mt-1">
