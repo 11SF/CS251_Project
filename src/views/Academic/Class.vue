@@ -33,7 +33,7 @@
                 >ดูข้อมูล</v-btn
               >
               <v-btn @click="roomSelect(i)" color="warning" dark block
-                >จัดตารางเรียน</v-btn
+                >จัดการวิชา</v-btn
               >
             </td>
           </tr>
@@ -71,6 +71,7 @@
                   class="ml-5"
                   color="warning"
                   @click="(editDialog = true), log()"
+                  disabled
                   >เลื่อนระดับชั้น</v-btn
                 >
               </div>
@@ -78,7 +79,7 @@
           </v-col>
         </v-row>
         <div class="mt-10 mb-3 d-flex justify-content-end">
-          <v-btn color="primary">เพิ่มนักเรียน</v-btn>
+          <v-btn color="primary" @click="addStudent(classSelect)">เพิ่มนักเรียน</v-btn>
         </div>
         <table class="table table-bordered mt-1">
           <thead>

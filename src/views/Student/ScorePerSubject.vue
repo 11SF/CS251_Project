@@ -50,7 +50,7 @@
           <v-list-item-title>ข้อมูลอาจารย์</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link @click="menuSelect(6)">
+        <v-list-item link @click="menuSelect(6)" v-if="$store.getters.getPollState == 'true'">
           <v-list-item-icon>
             <v-icon>mdi-star</v-icon>
           </v-list-item-icon>
@@ -139,7 +139,7 @@ export default {
           },
           params: {
             ClassroomID: this.$store.getters.getUserData.ClassroomID,
-            Term: "1",
+            Term: this.$store.getters.getAcademicState.Term,
           },
         })
         .then((res) => {

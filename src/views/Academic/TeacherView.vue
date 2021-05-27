@@ -65,6 +65,9 @@
     </v-navigation-drawer>
     <v-main class="content pa-0">
       <v-container class="mt-10">
+        <div class="text-end">
+          <v-btn color="primary" @click="addTeacher">เพิ่มอาจารย์</v-btn>
+        </div>
         <section>
           <v-select
             label="กลุ่มสาระ"
@@ -76,7 +79,7 @@
           ></v-select>
         </section>
         <section v-if="teacherList != ''">
-          <h2 class="text-center">หัวหน้ากลุ่มสาระ</h2>
+          <!-- <h2 class="text-center">หัวหน้ากลุ่มสาระ</h2> -->
           <div v-for="i in teacherList" :key="i">
             <v-card width="250" class="mx-auto my-13" v-if="i.Type == 1">
               <v-img :src="userImageMock()" height="200"></v-img>
@@ -101,6 +104,15 @@
                     "
                   >
                     แก้ไขข้อมูล
+                  </v-btn>
+                  <v-btn
+                    text
+                    color="red"
+                    @click="
+                     deleteTeacher(i)
+                    "
+                  >
+                    ลบ
                   </v-btn>
                 </v-card-actions>
               </div>
@@ -133,6 +145,15 @@
                     "
                   >
                     แก้ไขข้อมูล
+                  </v-btn>
+                  <v-btn
+                    text
+                    color="red"
+                    @click="
+                     deleteTeacher(i)
+                    "
+                  >
+                    ลบ
                   </v-btn>
                 </v-card-actions>
               </div>
@@ -373,6 +394,21 @@ export default {
         this.fetchTeacherList()
       })
     },
+    addTeacher() {
+      this.$router.push("addTeacher")
+    },
+    deleteTeacher(i) {
+      axios.delete("/user/staff/delete",{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            CitizenID : i.CitizenID
+          }
+      }).then(()=> {
+        this.fetchTeacherList()
+      })
+    }
   },
   created() {
     this.fetchDepartment();

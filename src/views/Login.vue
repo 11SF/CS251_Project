@@ -57,6 +57,7 @@ export default {
   methods: {
     login() {
       this.$store.dispatch("Login", this.forms);
+      this.$store.dispatch("academicData")
     },
   },
   computed: {

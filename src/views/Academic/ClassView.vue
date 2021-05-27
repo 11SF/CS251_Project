@@ -73,7 +73,6 @@
           <thead>
             <tr>
               <th class="text-center">ระดับชั้น</th>
-              <th class="text-center">ห้องย่อย</th>
               <th class="text-center">Actions</th>
             </tr>
           </thead>
@@ -82,7 +81,6 @@
               <td class="text-center align-middle">
                 มัธยมศึกษาปีที่ {{ i.idLevel }}
               </td>
-              <td class="text-center align-middle">10</td>
               <td class="text-center">
                 <v-btn color="primary" class="mb-5" @click="goClass(i)" block
                   >ดูข้อมูล</v-btn

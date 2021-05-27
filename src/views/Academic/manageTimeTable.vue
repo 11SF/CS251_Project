@@ -9,7 +9,9 @@
         </h3>
         <v-card-title>เลือกรายวิชา</v-card-title>
         <div class="text-end">
-          <v-btn color="primary">เพิ่มรายวิชา</v-btn>
+          <v-btn color="primary" dark @click="dialog = true">
+            เพิ่มรายวิชา
+          </v-btn>
           <v-list subheader two-line flat>
             <v-subheader>รายวิชาที่เลือก</v-subheader>
             <v-list-item v-for="i in selectSubject" :key="i">
@@ -20,7 +22,7 @@
           </v-list>
         </div>
       </v-card>
-      <table class="table table-hover table-bordered border-dark" width="100">
+      <!-- <table class="table table-hover table-bordered border-dark" width="100">
         <thead class="text-center">
           <tr>
             <th>วัน\คาบที่</th>
@@ -535,10 +537,35 @@
             </td>
           </tr>
         </tbody>
-      </table>
-      <div class="text-end">
+      </table> -->
+      <!-- <div class="text-end">
         <v-btn color="success">บันทึกข้อมูล</v-btn>
-      </div>
+      </div> -->
+      <v-dialog v-model="dialog" scrollable max-width="300px">
+        <v-card>
+          <v-card-title>เลือกรายวิชา</v-card-title>
+          <v-divider></v-divider>
+          <v-card-text style="height: 300px">
+            <v-radio-group v-model="addSubjectValue" value="" column>
+              <v-radio
+                v-for="i in getSubject()"
+                :key="i"
+                :label="`${i.SubjectName}`"
+                :value="i"
+              ></v-radio>
+            </v-radio-group>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn color="blue darken-1" text @click="dialog = false">
+              ปิด
+            </v-btn>
+            <v-btn color="blue darken-1" text @click="addSubject">
+              เลือก
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </v-content>
 </template>
@@ -631,6 +658,8 @@ export default {
           p12: "",
         },
       },
+      dialog: false,
+      addSubjectValue: "",
     };
   },
   methods: {
@@ -685,6 +714,42 @@ export default {
           if (res.data.status) {
             this.selectSubject = res.data.data;
           }
+        });
+    },
+    getSubject() {
+      switch (this.$store.getters.getRoomSelect.Level) {
+        case 1:
+          return this.subjectList.m1;
+        case 2:
+          return this.subjectList.m2;
+        case 3:
+          return this.subjectList.m3;
+        case 4:
+          return this.subjectList.m4;
+        case 5:
+          return this.subjectList.m5;
+        case 6:
+          return this.subjectList.m6;
+      }
+    },
+    addSubject() {
+      console.log(this.addSubjectValue);
+      axios
+        .get("/user/room/addSubject", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            ClassroomID: this.$store.getters.getRoomSelect.ClassroomID,
+            S_ID: this.addSubjectValue.ID,
+            S_name: this.addSubjectValue.SubjectName,
+            Term: this.$store.getters.getAcademicState.Term,
+          },
+        })
+        .then(() => {
+          this.addSubjectValue = "";
+          this.getClassroomSubject();
+          this.dialog = false;
         });
     },
   },

@@ -56,12 +56,12 @@
             <v-card class="pa-5" rounded="xl">
               <v-row dense>
                 <v-col cols="12" lg="5" align-self="center" class="text-center">
-                  <v-avatar size="208" class="d-flex mx-auto outlined">
-                    <img
-                      src="https://scontent.fbkk5-7.fna.fbcdn.net/v/t1.6435-1/p320x320/107698195_2967815813287518_541907919760258090_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeE3aO3DclaFIA835EOawoRtfGJcX_stZBh8Ylxf-y1kGO4umJMtOdZxjXdSJ5N0IJpcc6Rpj9i_eCT85UwALEOj&_nc_ohc=EFiQGU8_0UkAX9LrfQz&_nc_ht=scontent.fbkk5-7.fna&tp=6&oh=bb47ded825db3f157b54119d14141464&oe=609C1869"
-                      alt="John"
-                    />
-                  </v-avatar>
+                  <v-avatar
+                  size="180"
+                  class="d-flex mx-auto outlined"
+                  color="#3f73ff"
+                >
+                </v-avatar>
                   <v-chip class="ma-2" color="#3f73ff" dark> Teacher </v-chip>
                 </v-col>
                 <v-col cols="12" lg="7" class="pa-5">
@@ -71,7 +71,7 @@
                   </h4>
                   <div class="d-flex">
                     <p class="pr-7">ชื่อเล่น {{ user.Nickname }}</p>
-                    <p>เพศ {{ user.sex }}</p>
+                    <!-- <p>เพศ {{ user.sex }}</p> -->
                   </div>
                   <p>ประเภท {{ user.Sub_Type }}</p>
                   <p>กลุ่มสาระ {{ user.departmen_name }}</p>
@@ -105,8 +105,8 @@
             <v-card class="pa-10" rounded="xl" height="502">
               <h5>วันเดือนปีเกิด</h5>
               <p class="pl-5">{{ user.Bdate }}</p>
-              <h5>อายุ</h5>
-              <p class="pl-5">{{ user.age }} ปี</p>
+              <!-- <h5>อายุ</h5>
+              <p class="pl-5">{{ user.age }} ปี</p> -->
               <h5>ที่อยู่</h5>
               <p class="pl-5">{{ user.Location }}</p>
               <br />

@@ -62,7 +62,8 @@
       </v-list>
     </v-navigation-drawer>
     <v-main class="content pa-0">
-      <v-container class="mt-10">
+      <h1 class="text-muted" v-if="loading">กำลังโหลด</h1>
+      <v-container class="mt-10" v-else>
         <h1>จัดการรายวิชา</h1>
         <div class="d-flex justify-content-end">
           <v-btn
@@ -89,7 +90,11 @@
                       >ครูผู้สอน{{ " " + j.TeacherName }}</v-subheader
                     >
                     <v-card-actions class="d-flex justify-content-end">
-                      <v-btn text color="teal accent-4" @click="reveal = true">
+                      <v-btn
+                        text
+                        color="teal accent-4"
+                        @click="(reveal = true), fetchSubjectSelect(j)"
+                      >
                         แก้ไขข้อมูล
                       </v-btn>
                       <v-btn
@@ -184,11 +189,10 @@
                   <v-col cols="12">
                     <v-select
                       label="ครูผู้สอน"
-                      v-model="teacher"
+                      v-model="form.TeacherCitizenID"
                       :items="teacherList"
                       item-text="FnameTH"
                       item-value="CitizenID"
-                      @input="getName"
                     ></v-select>
                   </v-col>
                   <v-col cols="12">
@@ -196,6 +200,75 @@
                       label="เทอม"
                       v-model="form.Term"
                       :items="termList"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="ปีการศึกษา"
+                      type="number"
+                      v-model="form.Year"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-container>
+          </v-card>
+        </v-dialog>
+
+        <v-dialog
+          v-model="updateSubjectDialog"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
+        >
+          <v-card>
+            <v-toolbar dark color="primary">
+              <v-toolbar-title>เพิ่มรายวิชา</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn dark text @click="updateSubjectDialog = false">
+                  ปิด
+                </v-btn>
+                <v-btn dark text @click="updateSubject()"> บันทึก </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+            <v-container class="mt-10">
+              <v-card class="pa-10">
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="ชื่อวิชา"
+                      v-model="form.SubjectName"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="รหัสวิชา"
+                      v-model="form.SubjectID"
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col cols="12">
+                    <v-text-field
+                      label="หน่วยกิต"
+                      type="number"
+                      v-model="form.Dredit"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="คะแนนเต็ม"
+                      type="number"
+                      v-model="form.Score"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-select
+                      label="ครูผู้สอน"
+                      v-model="form.TeacherCitizenID"
+                      :items="teacherList"
+                      item-text="FnameTH"
+                      item-value="CitizenID"
                     ></v-select>
                   </v-col>
                   <v-col cols="12">
@@ -235,7 +308,7 @@ export default {
         SubjectName: "",
         SubjectID: "",
         Type: "",
-        Credit: "",
+        Dredit: "",
         Score: "",
         level: "",
         Term: "",
@@ -252,6 +325,8 @@ export default {
       },
       TypeList: ["พื้นฐาน", "กิจกรรมพัฒนาผู้เรียน"],
       termList: ["1", "2"],
+      updateSubjectDialog: false,
+      loading: true
     };
   },
   methods: {
@@ -298,7 +373,8 @@ export default {
             break;
         }
       });
-      console.log(this.subjectList);
+      // console.log(this.subjectList);
+      this.loading = false
     },
     fetchLevel() {
       axios
@@ -312,6 +388,7 @@ export default {
         });
     },
     addSubjectForm() {
+      this.getType();
       this.getName();
       axios
         .get("/user/subject/add", {
@@ -322,7 +399,7 @@ export default {
             SubjectName: this.form.SubjectName,
             SubjectID: this.form.SubjectID,
             Type: this.form.Type,
-            Dredit: this.form.Credit,
+            Dredit: this.form.Dredit,
             Score: this.form.Score,
             level: this.form.level,
             Term: this.form.Term,
@@ -362,38 +439,91 @@ export default {
         })
         .then((res) => {
           this.teacherList = res.data;
+          console.log(this.teacherList);
         });
     },
-    getName() {
-      this.form.TeacherCitizenID = this.teacher;
+    getType() {
       if (this.form.Type == "พื้นฐาน") {
         this.form.Type = 1;
       } else {
         this.form.Type = 2;
       }
+    },
+    getName() {
       this.teacherList.forEach((e) => {
-        if (this.teacher == e.CitizenID) {
+        if (this.form.TeacherCitizenID == e.CitizenID) {
           this.form.TeacherName = e.FnameTH + " " + e.LnameTH;
         }
       });
     },
     deleteSubject(i) {
-      axios.delete("/user/subject/delete", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("userKey")}`,
-        },
-        params: {
-          ID: i.ID,
-        },
-      }).then(()=> {
-        this.subjectList.m1 = [];
+      axios
+        .delete("/user/subject/delete", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            ID: i.ID,
+          },
+        })
+        .then(() => {
+          this.subjectList.m1 = [];
           this.subjectList.m2 = [];
           this.subjectList.m3 = [];
           this.subjectList.m4 = [];
           this.subjectList.m5 = [];
           this.subjectList.m6 = [];
           this.fetchSubject();
-      })
+        });
+    },
+    fetchSubjectSelect(i) {
+      console.log(i);
+      axios
+        .get("/user/subject/getById", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            ID: i.ID,
+          },
+        })
+        .then((res) => {
+          this.form = res.data.data[0];
+          this.updateSubjectDialog = true;
+          console.log(this.form);
+        });
+    },
+    updateSubject() {
+      axios
+        .get("/user/subject/edit", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            ID: this.form.ID,
+            SubjectName: this.form.SubjectName,
+            SubjectID: this.form.SubjectID,
+            Type: this.form.Type,
+            Dredit: this.form.Dredit,
+            Score: this.form.Score,
+            level: this.form.level,
+            Term: this.form.Term,
+            Year: this.form.Year,
+            DepartID: this.form.DepartID,
+            TeacherName: this.form.TeacherName,
+            TeacherCitizenID: this.form.TeacherCitizenID,
+          },
+        })
+        .then(() => {
+          this.updateSubjectDialog = false;
+          this.subjectList.m1 = [];
+          this.subjectList.m2 = [];
+          this.subjectList.m3 = [];
+          this.subjectList.m4 = [];
+          this.subjectList.m5 = [];
+          this.subjectList.m6 = [];
+          this.fetchSubject();
+        });
     },
   },
   created() {

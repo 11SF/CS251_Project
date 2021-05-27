@@ -50,7 +50,7 @@
           <v-list-item-title>ข้อมูลอาจารย์</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link @click="menuSelect(6)">
+        <v-list-item link @click="menuSelect(6)" v-if="$store.getters.getPollState == 'true'">
           <v-list-item-icon>
             <v-icon>mdi-star</v-icon>
           </v-list-item-icon>
@@ -67,12 +67,12 @@
             <v-card class="pa-5 mb-4" rounded="xl">
               <v-row dense>
                 <v-col cols="12" lg="5" align-self="center" class="text-center">
-                  <v-avatar size="208" class="d-flex mx-auto outlined">
-                    <img
-                      src="https://scontent.fbkk5-7.fna.fbcdn.net/v/t1.6435-9/107698195_2967815813287518_541907919760258090_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeE3aO3DclaFIA835EOawoRtfGJcX_stZBh8Ylxf-y1kGO4umJMtOdZxjXdSJ5N0IJpcc6Rpj9i_eCT85UwALEOj&_nc_ohc=OtV9XSYMS7IAX8YU1tP&_nc_ht=scontent.fbkk5-7.fna&oh=2fb19b59f5eb1c7f0e3709ae9da02a35&oe=60C4AAF6"
-                      alt="John"
-                    />
-                  </v-avatar>
+                  <v-avatar
+                  size="180"
+                  class="d-flex mx-auto outlined"
+                  color="#81c784"
+                >
+                </v-avatar>
                   <v-chip class="ma-2" color="#81c784" dark> Student </v-chip>
                 </v-col>
                 <v-col cols="12" lg="7" class="pa-5">
@@ -126,8 +126,8 @@
             <v-card class="pa-10" rounded="xl" height="502">
               <h5>วันเดือนปีเกิด</h5>
               <p class="pl-5">{{ user[0].profile.Bdate }}</p>
-              <h5>อายุ</h5>
-              <p class="pl-5">ยังไม่ได้คิด ปี</p>
+              <!-- <h5>อายุ</h5>
+              <p class="pl-5">ยังไม่ได้คิด ปี</p> -->
               <h5>ที่อยู่</h5>
               <p class="pl-5">{{ user[0].profile.Location }}</p>
               <br />

@@ -86,7 +86,10 @@
             <br />
             <!-- <v-divider></v-divider> -->
             <br />
-            <!-- <h5>ความสามารถพิเศษ</h5> -->
+            <v-text-field
+              v-model="ability"
+              label="ความสามารถพิเศษ"
+            ></v-text-field>
           </v-card>
         </v-col>
       </v-row>
@@ -150,7 +153,7 @@
 </template>
 
 <script>
-// import axios from "Axios";
+import axios from "axios";
 export default {
   data() {
     return {
@@ -166,6 +169,7 @@ export default {
         Bdate: "",
         Location: "",
         zip: "",
+        ClassroomID: this.$store.getters.getRoomSelect.ClassroomID
       },
       dependent: {
         Fname: "",
@@ -174,11 +178,25 @@ export default {
         phone: "",
         relation: "",
       },
+      ability: ""
     };
   },
   methods: {
     saveData() {
-      // axios.get()
+      axios.get("/user/student/add",{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            profile: this.profile,
+            dependent: this.dependent,
+            ability: this.ability
+          }
+      }).then(res=> {
+        if(res.data.status) {
+          this.$router.push("Class")
+        }
+      })
     },
   },
 };

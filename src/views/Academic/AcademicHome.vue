@@ -32,8 +32,6 @@
           <v-list-item-title>ข้อมูลส่วนตัว</v-list-item-title>
         </v-list-item>
 
-        
-
         <v-list-item link @click="menuSelect(4)">
           <v-list-item-icon>
             <v-icon>mdi-star</v-icon>
@@ -63,42 +61,45 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-main class="content pa-0">
+    <v-main v-if="loading">
+      <h1 class="text-muted">กำลังโหลด</h1>
+    </v-main>
+    <v-main class="content pa-0" v-else>
       <v-row>
         <v-col lg="6" cols="12">
           <v-card class="pa-4" color="green" dark>
             <h3>จำนวนนักเรียน</h3>
-            <h4>{{data.student[0]["COUNT(ID)"]}}</h4>
+            <h4>{{ data.student[0]["COUNT(ID)"] }}</h4>
           </v-card>
         </v-col>
         <v-col lg="6" cols="12">
           <v-card class="pa-4" color="indigo" dark>
             <h3>จำนวนอาจารย์</h3>
-            <h4>{{data.staff[0]["COUNT(ID)"]}}</h4>
+            <h4>{{ data.staff[0]["COUNT(ID)"] }}</h4>
           </v-card>
         </v-col>
         <v-col lg="3" cols="12">
           <v-card class="pa-4" color="indigo" dark>
             <h3>จำนวนกลุ่มสาระ</h3>
-            <h4>{{data.department[0]["COUNT(department_id)"]}}</h4>
+            <h4>{{ data.department[0]["COUNT(department_id)"] }}</h4>
           </v-card>
         </v-col>
         <v-col lg="3" cols="12">
           <v-card class="pa-4" color="indigo" dark>
             <h3>จำนวนรายวิชา</h3>
-            <h4>{{data.subject[0]["COUNT(ID)"]}}</h4>
+            <h4>{{ data.subject[0]["COUNT(ID)"] }}</h4>
           </v-card>
         </v-col>
         <v-col lg="3" cols="12">
           <v-card class="pa-4" color="indigo" dark>
             <h3>จำนวนระดับชั้น</h3>
-            <h4>{{data.level[0]["COUNT(idLevel)"]}}</h4>
+            <h4>{{ data.level[0]["COUNT(idLevel)"] }}</h4>
           </v-card>
         </v-col>
         <v-col lg="3" cols="12">
           <v-card class="pa-4" color="indigo" dark>
             <h3>จำนวนห้องเรียน</h3>
-            <h4>{{data.room[0]["COUNT(ClassroomID)"]}}</h4>
+            <h4>{{ data.room[0]["COUNT(ClassroomID)"] }}</h4>
           </v-card>
         </v-col>
       </v-row>
@@ -118,14 +119,21 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title>เทอมปัจจุบัน</v-list-item-title>
-                    <v-list-item-subtitle>เทอม {{" " + $store.getters.getAcademicState.Term}}</v-list-item-subtitle>
+                    <v-list-item-subtitle
+                      >เทอม
+                      {{
+                        " " + $store.getters.getAcademicState.Term
+                      }}</v-list-item-subtitle
+                    >
                   </v-list-item-content>
                 </v-list-item>
 
                 <v-list-item three-line>
                   <v-list-item-content>
                     <v-list-item-title>ปีการศึกษาปัจจุบัน</v-list-item-title>
-                    <v-list-item-subtitle> ปี{{" " + $store.getters.getAcademicState.Year}} </v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                      ปี{{ " " + $store.getters.getAcademicState.Year }}
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -141,8 +149,14 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title>ระบบโหวตอาจารย์ดีเด่น</v-list-item-title>
-                    <v-list-item-subtitle v-if="$store.getters.getPollState == 'true'">เปิด</v-list-item-subtitle>
-                    <v-list-item-subtitle v-if="$store.getters.getPollState == 'false'">ปิด</v-list-item-subtitle>
+                    <v-list-item-subtitle
+                      v-if="$store.getters.getPollState == 'true'"
+                      >เปิด</v-list-item-subtitle
+                    >
+                    <v-list-item-subtitle
+                      v-if="$store.getters.getPollState == 'false'"
+                      >ปิด</v-list-item-subtitle
+                    >
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -196,6 +210,7 @@ export default {
         level: "",
         room: "",
       },
+      loading : true
     };
   },
   methods: {
@@ -217,76 +232,80 @@ export default {
         })
         .then((res) => {
           this.academicList = res.data.data;
-        });
-
-      axios
-        .get("/user/sum/student", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
-          },
-        })
-        .then((res) => {
-          this.data.student = res.data.data;
-        });
-
-      axios
-        .get("/user/sum/staff", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
-          },
-        })
-        .then((res) => {
-          this.data.staff = res.data.data;
-        });
-
-      axios
-        .get("/user/sum/department", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
-          },
-        })
-        .then((res) => {
-          this.data.department = res.data.data;
-        });
-
-      axios
-        .get("/user/sum/subject", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
-          },
-          params: {
-            Term: this.$store.getters.getAcademicState.Term,
-            Year: this.$store.getters.getAcademicState.Year,
-          },
-        })
-        .then((res) => {
-          this.data.subject = res.data.data;
-        });
-
-      axios
-        .get("/user/sum/level", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
-          },
-          params: {
-            Year: this.$store.getters.getAcademicState.Year,
-          },
-        })
-        .then((res) => {
-          this.data.level = res.data.data;
-        });
-
-      axios
-        .get("/user/sum/room", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
-          },
-          params: {
-            Year: this.$store.getters.getAcademicState.Year,
-          },
-        })
-        .then((res) => {
-          this.data.room = res.data.data;
+          axios
+            .get("/user/sum/student", {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+              },
+            })
+            .then((res) => {
+              this.data.student = res.data.data;
+              axios
+                .get("/user/sum/staff", {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+                  },
+                })
+                .then((res) => {
+                  this.data.staff = res.data.data;
+                  axios
+                    .get("/user/sum/department", {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "userKey"
+                        )}`,
+                      },
+                    })
+                    .then((res) => {
+                      this.data.department = res.data.data;
+                      axios
+                        .get("/user/sum/subject", {
+                          headers: {
+                            Authorization: `Bearer ${localStorage.getItem(
+                              "userKey"
+                            )}`,
+                          },
+                          params: {
+                            Term: this.$store.getters.getAcademicState.Term,
+                            Year: this.$store.getters.getAcademicState.Year,
+                          },
+                        })
+                        .then((res) => {
+                          this.data.subject = res.data.data;
+                          axios
+                            .get("/user/sum/level", {
+                              headers: {
+                                Authorization: `Bearer ${localStorage.getItem(
+                                  "userKey"
+                                )}`,
+                              },
+                              params: {
+                                Year: this.$store.getters.getAcademicState.Year,
+                              },
+                            })
+                            .then((res) => {
+                              this.data.level = res.data.data;
+                              axios
+                                .get("/user/sum/room", {
+                                  headers: {
+                                    Authorization: `Bearer ${localStorage.getItem(
+                                      "userKey"
+                                    )}`,
+                                  },
+                                  params: {
+                                    Year: this.$store.getters.getAcademicState
+                                      .Year,
+                                  },
+                                })
+                                .then((res) => {
+                                  this.data.room = res.data.data;
+                                  this.loading = false
+                                });
+                            });
+                        });
+                    });
+                });
+            });
         });
     },
     getAvatar(i) {

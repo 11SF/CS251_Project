@@ -120,8 +120,8 @@ export default {
           },
           params: {
             CitizenID: this.$store.getters.getUserData.id,
-            Term: "1",
-            Year: "2561",
+            Term: this.$store.getters.getAcademicState.Term,
+            Year: this.$store.getters.getAcademicState.Year,
           },
         })
         .then((res) => {
