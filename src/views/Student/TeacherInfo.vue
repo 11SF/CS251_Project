@@ -146,11 +146,11 @@ export default {
         })
         .then((res) => {
           this.department = res.data;
-          console.log(res.data);
+          // console.log(res.data);
         });
     },
     fetchTeacherList() {
-      console.log(this.depart);
+      // console.log(this.depart);
       axios
         .get("/user/teacher/get/byDepartment", {
           headers: {
@@ -162,7 +162,7 @@ export default {
         })
         .then((res) => {
           this.teacherList = res.data;
-          console.log(res.data);
+          // console.log(res.data);
         });
     },
     userImageMock() {

@@ -313,11 +313,11 @@ export default {
         })
         .then((res) => {
           this.department = res.data;
-          console.log(res.data);
+          // console.log(res.data);
         });
     },
     fetchTeacherList() {
-      console.log(this.depart);
+      // console.log(this.depart);
       axios
         .get("/user/teacher/get/byDepartment", {
           headers: {
@@ -329,7 +329,7 @@ export default {
         })
         .then((res) => {
           this.teacherList = res.data;
-          console.log(res.data);
+          // console.log(res.data);
         });
     },
     userImageMock() {
@@ -340,7 +340,7 @@ export default {
       );
     },
     fetchProfileData() {
-      console.log(this.teacherSelect);
+      // console.log(this.teacherSelect);
       axios
         .get("/user/teacher/get/byCitizenID", {
           headers: {
@@ -352,7 +352,7 @@ export default {
         })
         .then((res) => {
           this.user = res.data[0];
-          console.log(this.user);
+          // console.log(this.user);
         });
       axios
         .get("/user/teacher/getAdvisor", {
@@ -365,7 +365,7 @@ export default {
         })
         .then((res) => {
           this.advisor = res.data.data[0];
-          console.log(this.advisor);
+          // console.log(this.advisor);
         });
     },
     saveData() {

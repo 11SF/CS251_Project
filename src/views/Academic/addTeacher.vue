@@ -140,7 +140,7 @@ export default {
         })
         .then((res) => {
           this.department = res.data;
-          console.log(this.department);
+          // console.log(this.department);
         });
     },
     save() {

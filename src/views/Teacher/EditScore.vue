@@ -126,7 +126,7 @@ export default {
         })
         .then((res) => {
           this.subject = res.data.data;
-          console.log(this.subject);
+          // console.log(this.subject);
         });
     },
     subjectSelect(i) {

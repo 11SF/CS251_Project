@@ -169,7 +169,7 @@ export default {
         .then((res) => {
           if (res.data.status) {
             this.permission = true;
-            console.log(res.data.status);
+            // console.log(res.data.status);
           } else {
             this.permission = false;
             this.msg = res.data.msg;
@@ -191,7 +191,7 @@ export default {
         })
         .then((res) => {
           this.teacherList = res.data;
-          console.log(res.data);
+          // console.log(res.data);
         });
     },
     userImageMock() {
@@ -244,7 +244,7 @@ export default {
             })
             .then((res) => {
               this.vote = res.data[0];
-              console.log(res.data);
+              // console.log(res.data);
             });
         });
     },

@@ -255,7 +255,7 @@ export default {
               .then((res) => {
                 if (res.status) {
                   this.classroom = res.data.data;
-                  console.log(this.classroom);
+                  // console.log(this.classroom);
                 }
               });
           }

@@ -192,6 +192,57 @@
           </v-card>
         </v-col>
       </v-row>
+      <section class="mb-10 mt-10">
+        <v-card max-width="1300" class="pa-10">
+          <h4>เพิ่มประกาศ</h4>
+          <v-text-field
+            class="mt-10"
+            v-model="postData.title"
+            label="ชื่อเรื่อง"
+            required
+          ></v-text-field>
+          <v-textarea
+            name="input-7-1"
+            label="เนื้อหา"
+            v-model="postData.message"
+          ></v-textarea>
+          <div class="d-flex justify-content-end">
+            <v-btn color="success" @click="post">ประกาศ</v-btn>
+          </div>
+        </v-card>
+      </section>
+      <v-row>
+        <v-col lg="4" cols="12" v-for="i in postList" :key="i">
+          <v-card color="#26c6da" dark max-width="420">
+            <v-card-title>
+              <v-icon large left> mdi-bullhorn </v-icon>
+              <span class="title font-weight-light">{{ i.title }}</span>
+            </v-card-title>
+
+            <v-card-text class="headline font-weight-bold">
+              {{ i.Message }}
+            </v-card-text>
+
+            <v-card-actions>
+              <v-list-item class="grow">
+                <v-list-item-avatar color="grey darken-3">
+                  <v-img
+                    class="elevation-6"
+                    alt=""
+                    src="https://cdn.discordapp.com/emojis/803877390786494465.png?v=1"
+                  ></v-img>
+                </v-list-item-avatar>
+
+                <v-list-item-content>
+                  <v-list-item-title>{{
+                    i.FnameTH + " " + i.LnameTH
+                  }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-main>
   </v-content>
 </template>
@@ -210,7 +261,12 @@ export default {
         level: "",
         room: "",
       },
-      loading : true
+      loading: true,
+      postData: {
+        title: "",
+        message: "",
+      },
+      postList: "",
     };
   },
   methods: {
@@ -299,7 +355,7 @@ export default {
                                 })
                                 .then((res) => {
                                   this.data.room = res.data.data;
-                                  this.loading = false
+                                  this.loading = false;
                                 });
                             });
                         });
@@ -311,9 +367,41 @@ export default {
     getAvatar(i) {
       return i.FnameTH.charAt(0);
     },
+    fetchPost() {
+      axios
+        .get("/user/post/getPost", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            PostById: this.$store.getters.getUserData.id,
+          },
+        })
+        .then((res) => {
+          this.postList = res.data.data;
+        });
+    },
+    post() {
+      axios
+        .get("/user/post/addPost", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            title: this.postData.title,
+            Message: this.postData.message,
+            PostById: this.$store.getters.getUserData.id,
+            priority: "1",
+          },
+        })
+        .then(() => {
+          this.fetchPost();
+        });
+    },
   },
   created() {
     this.fetchData();
+    this.fetchPost();
   },
 };
 </script>

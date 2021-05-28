@@ -176,7 +176,7 @@ export default {
         })
         .then((res) => {
           this.user = res.data[0];
-          console.log(this.user);
+          // console.log(this.user);
         });
       axios
         .get("/user/teacher/getAdvisor", {
@@ -189,7 +189,7 @@ export default {
         })
         .then((res) => {
           this.advisor = res.data.data[0];
-          console.log(this.advisor);
+          // console.log(this.advisor);
         });
     },
   },

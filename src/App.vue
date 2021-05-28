@@ -33,8 +33,6 @@ export default {
   },
   created() {
     this.$store.dispatch("checkLogin");
-    this.$store.dispatch("academicData")
-    this.$store.dispatch("pollState")
   },
 };
 </script>

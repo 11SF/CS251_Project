@@ -75,6 +75,8 @@ export default new Vuex.Store({
     checkLogin(context) {
       if(localStorage.getItem('userKey') != null) {
         context.commit('CHECKLOGIN')
+        this.dispatch("academicData")
+        this.dispatch("pollState")
       }
     },
     toggle(context) {

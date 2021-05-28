@@ -5,8 +5,13 @@
       <v-list>
         <v-list-item link>
           <v-list-item-content>
-            <v-list-item-title class="title"> {{$store.getters.getUserData.nameTH}} </v-list-item-title>
-            <v-list-item-subtitle>role : {{$store.getters.getUserData.role}}</v-list-item-subtitle>
+            <v-list-item-title class="title">
+              {{ $store.getters.getUserData.nameTH }}
+            </v-list-item-title>
+            <v-list-item-subtitle
+              >role :
+              {{ $store.getters.getUserData.role }}</v-list-item-subtitle
+            >
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -50,7 +55,11 @@
           <v-list-item-title>ข้อมูลอาจารย์</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link @click="menuSelect(6)" v-if="$store.getters.getPollState == 'true'">
+        <v-list-item
+          link
+          @click="menuSelect(6)"
+          v-if="$store.getters.getPollState == 'true'"
+        >
           <v-list-item-icon>
             <v-icon>mdi-star</v-icon>
           </v-list-item-icon>
@@ -61,30 +70,26 @@
 
     <v-main class="pa-0 content">
       <v-container>
-        <section class="mb-10">
+        <!-- <section class="mb-10">
           <v-sheet height="600" color="green" class="pa-10">
             <h1 class="text-center">พื้นที่สำหรับตารางเรียน</h1>
           </v-sheet>
-        </section>
+        </section> -->
         <v-row>
-          <v-col lg="4" cols="12" v-for="alert in 4" :key="alert">
-            <v-card color="#26c6da" dark max-width="420">
+          <v-col lg="4" cols="12" v-for="i in postList" :key="i">
+            <v-card :color="(i.priority=='1') ? 'red' : '#26c6da'" dark max-width="420">
               <v-card-title>
                 <v-icon large left> mdi-bullhorn </v-icon>
-                <span class="title font-weight-light"
-                  >Lorem ipsum dolor sit amet.</span
-                >
+                <span class="title font-weight-light">{{ i.title }}</span>
               </v-card-title>
 
               <v-card-text class="headline font-weight-bold">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis
-                iste facere sequi delectus. Expedita, quisquam reprehenderit
-                maiores eius minus ipsum?
+                {{ i.Message }}
               </v-card-text>
 
               <v-card-actions>
                 <v-list-item class="grow">
-                  <v-list-item-avatar color="grey darken-3">
+                  <v-list-item-avatar>
                     <v-img
                       class="elevation-6"
                       alt=""
@@ -93,7 +98,9 @@
                   </v-list-item-avatar>
 
                   <v-list-item-content>
-                    <v-list-item-title>Lorem, ipsum.</v-list-item-title>
+                    <v-list-item-title>{{
+                      i.FnameTH + " " + i.LnameTH
+                    }}</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-card-actions>
@@ -106,10 +113,13 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Home",
   data() {
-    return {};
+    return {
+      postList: "",
+    };
   },
   methods: {
     menuSelect(select) {
@@ -119,6 +129,34 @@ export default {
       else if (select == 5) this.$router.push({ name: "TeacherInfo" });
       else if (select == 6) this.$router.push({ name: "VoteTeacher" });
     },
+    fetchPost() {
+      axios
+        .get("/user/student/get/advisor", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            ClassroomID: this.$store.getters.getUserData.ClassroomID,
+          },
+        })
+        .then((res) => {
+          axios
+            .get("/user/post/getPost", {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+              },
+              params: {
+                PostById: res.data.data[0].citizenID,
+              },
+            })
+            .then((res) => {
+              this.postList = res.data.data;
+            });
+        });
+    },
+  },
+  created() {
+    this.fetchPost();
   },
 };
 </script>

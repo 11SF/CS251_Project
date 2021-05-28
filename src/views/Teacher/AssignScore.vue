@@ -83,10 +83,8 @@
                     <v-btn
                       color="white"
                       @click="
-                          (dialog2 = true),
-                          (CitizenID = i.CitizenID),
-                          (studentSelected = i);
-                        fetchStudentScore();
+                        (CitizenID = i.CitizenID), (studentSelected = i);
+                        fetchStudentScore(i);
                       "
                       ><v-icon>mdi-grease-pencil</v-icon></v-btn
                     >
@@ -126,18 +124,18 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-                color="blue darken-1"
+                color="red darken-1"
                 text
                 @click="(dialog = false), (editAssign = '')"
               >
-                Close
+                ปิด
               </v-btn>
               <v-btn
                 color="blue darken-1"
                 text
                 @click="(dialog = false), editAssignment()"
               >
-                Save
+                บันทึก
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -170,15 +168,15 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="newAssign = false">
-                Close
+              <v-btn color="red darken-1" text @click="newAssign = false">
+                ปิด
               </v-btn>
               <v-btn
                 color="blue darken-1"
                 text
                 @click="(newAssign = false), addAssign()"
               >
-                Save
+                บันทึก
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -189,7 +187,10 @@
               <span class="headline">จัดการคะแนน</span>
             </v-card-title>
             <v-card-text>
-              <v-container v-if="studentSelect.ReceiveScore != ''">
+              <div>
+                <p>{{"ชื่อ " + studentSelected.FnameTH + " " + studentSelected.LnameTH}}</p>
+              </div>
+              <v-container>
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
@@ -205,15 +206,11 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-                color="blue darken-1"
+                color="red darken-1"
                 text
-                @click="
-                  (dialog2 = false),
-                    (studentSelect = ''),
-                    (studentSelect.ReceiveScore = '')
-                "
+                @click="(dialog2 = false), (studentSelected = '')"
               >
-                Close
+                ปิด
               </v-btn>
               <v-btn
                 color="blue darken-1"
@@ -221,7 +218,7 @@
                 @click="(dialog2 = false), addScore()"
                 :disabled="CitizenID == ''"
               >
-                Save
+                บันทึก
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -248,18 +245,18 @@ export default {
         FullScore: "",
       },
       studentSelect: {
-        ReceiveScore: "",
+        ReceiveScore: 0,
       },
       CitizenID: "",
       studentSelected: "",
-      add: false
+      add: false,
     };
   },
   methods: {
     fetchAssign() {
-      console.log(
-        this.SubjectSelect.ClassroomID + " " + this.SubjectSelect.S_ID
-      );
+      // console.log(
+      //   this.SubjectSelect.ClassroomID + " " + this.SubjectSelect.S_ID
+      // );
       axios
         .get("/user/teacher/get/subject/assignment", {
           headers: {
@@ -272,7 +269,7 @@ export default {
         })
         .then((res) => {
           this.assignList = res.data.data;
-          console.log(this.assignList);
+          // console.log(this.assignList);
         });
     },
     calculateScore(assignList) {
@@ -296,11 +293,11 @@ export default {
         })
         .then((res) => {
           this.studentList = res.data.data;
-          console.log(this.studentList);
+          // console.log(this.studentList);
         });
     },
     editAssignment() {
-      console.log(this.editAssign);
+      // console.log(this.editAssign);
       axios
         .get("/user/teacher/edit/assignment", {
           headers: {
@@ -314,8 +311,8 @@ export default {
             ClassroomID: this.SubjectSelect.ClassroomID,
           },
         })
-        .then((res) => {
-          console.log("a", res);
+        .then(() => {
+          // console.log("a", res);
           this.fetchAssign();
         });
     },
@@ -332,8 +329,8 @@ export default {
             ClassroomID: this.SubjectSelect.ClassroomID,
           },
         })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           this.fetchAssign();
         });
     },
@@ -351,10 +348,11 @@ export default {
         })
         .then((res) => {
           if (res.data.data[0] != undefined) {
-            this.studentSelect.ReceiveScore = res.data.data[0].ReceiveScore
+            this.studentSelect.ReceiveScore = res.data.data[0].ReceiveScore;
           } else {
-            this.studentSelect.ReceiveScore = ''
+            this.studentSelect.ReceiveScore = 0
           }
+          this.dialog2 = true;
         });
     },
     addScore() {
@@ -371,11 +369,11 @@ export default {
             ClassroomID: this.SubjectSelect.ClassroomID,
           },
         })
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
+          // console.log(res.data);
         });
       this.CitizenID = "";
-      this.studentSelect.ReceiveScore = ''
+      this.studentSelect.ReceiveScore = "";
     },
   },
   created() {

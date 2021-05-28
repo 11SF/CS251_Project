@@ -147,7 +147,7 @@ export default {
         });
     },
     fetchAssign() {
-      console.log(this.subject);
+      // console.log(this.subject);
       axios
         .get("/user/student/get/assignments", {
           headers: {
@@ -165,7 +165,7 @@ export default {
   },
   created() {
     this.fetchSubject();
-    console.log(this.$store.getters.getUserData.ClassroomID);
+    // console.log(this.$store.getters.getUserData.ClassroomID);
   },
 };
 </script>

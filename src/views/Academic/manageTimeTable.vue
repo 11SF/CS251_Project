@@ -697,7 +697,7 @@ export default {
             break;
         }
       });
-      console.log(this.subjectList);
+      // console.log(this.subjectList);
     },
     getClassroomSubject() {
       axios
@@ -733,7 +733,7 @@ export default {
       }
     },
     addSubject() {
-      console.log(this.addSubjectValue);
+      // console.log(this.addSubjectValue);
       axios
         .get("/user/room/addSubject", {
           headers: {

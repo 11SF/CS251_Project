@@ -330,11 +330,11 @@ export default {
         })
         .then((res) => {
           this.LevelList = res.data.data;
-          console.log(this.LevelList);
+          // console.log(this.LevelList);
         });
     },
     goClass(i) {
-      console.log(i);
+      // console.log(i);
       this.$router.push({ name: "Class" });
       this.$store.dispatch("classSelect", i.idLevel);
     },
@@ -350,7 +350,7 @@ export default {
         })
         .then((res) => {
           this.teacherList = res.data;
-          console.log(this.teacherList);
+          // console.log(this.teacherList);
         });
     },
     userImageMock() {

@@ -285,7 +285,7 @@ export default {
         })
         .then((res) => {
           this.topVote = res.data.data;
-          console.log(this.topVote);
+          // console.log(this.topVote);
         });
     },
     deletePollData() {

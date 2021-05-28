@@ -166,7 +166,7 @@ export default {
         })
         .then((res) => {
           this.rooms = res.data;
-          console.log(this.rooms);
+          // console.log(this.rooms);
         });
     },
     fetchTable() {
@@ -182,10 +182,10 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data != "") {
             this.table = res.data;
-            console.log(this.table);
+            // console.log(this.table);
           } else {
             this.table = "-";
           }

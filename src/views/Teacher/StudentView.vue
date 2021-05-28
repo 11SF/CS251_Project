@@ -123,7 +123,7 @@ export default {
             })
             .then((res) => {
               this.studentList = res.data.data;
-              console.log(this.studentList);
+              // console.log(this.studentList);
             });
         });
     },

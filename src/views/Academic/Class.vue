@@ -322,7 +322,7 @@ export default {
         })
         .then((res) => {
           this.studentList = res.data.data;
-          console.log(this.$store.getters.getClassSelect);
+          // console.log(this.$store.getters.getClassSelect);
         });
     },
     fetchRoom() {
@@ -337,7 +337,7 @@ export default {
         })
         .then((res) => {
           this.levelList = res.data.data;
-          console.log(this.levelList);
+          // console.log(this.levelList);
         });
     },
     editStudent(i) {
@@ -432,7 +432,7 @@ export default {
       this.teacherList = "";
     },
     log() {
-      console.log(this.classSelect);
+      // console.log(this.classSelect);
     },
     deleteStudent(ID) {
       axios

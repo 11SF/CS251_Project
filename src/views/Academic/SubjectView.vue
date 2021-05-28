@@ -439,7 +439,7 @@ export default {
         })
         .then((res) => {
           this.teacherList = res.data;
-          console.log(this.teacherList);
+          // console.log(this.teacherList);
         });
     },
     getType() {
@@ -477,7 +477,7 @@ export default {
         });
     },
     fetchSubjectSelect(i) {
-      console.log(i);
+      // console.log(i);
       axios
         .get("/user/subject/getById", {
           headers: {
@@ -490,7 +490,7 @@ export default {
         .then((res) => {
           this.form = res.data.data[0];
           this.updateSubjectDialog = true;
-          console.log(this.form);
+          // console.log(this.form);
         });
     },
     updateSubject() {

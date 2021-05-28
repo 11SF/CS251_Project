@@ -50,39 +50,38 @@
     </v-navigation-drawer>
     <v-main class="pa-0 content">
       <v-container>
-        <section class="mb-10">
+        <!-- <section class="mb-10">
           <v-sheet height="600" color="green" class="pa-10">
             <h1 class="text-center">พื้นที่สำหรับตารางสอน</h1>
           </v-sheet>
-        </section>
+        </section> -->
         <section class="mb-10">
           <v-card max-width="1300" class="pa-10">
             <h4>เพิ่มประกาศ</h4>
             <v-text-field
               class="mt-10"
-              v-model="firstname"
+              v-model="postData.title"
               label="ชื่อเรื่อง"
               required
             ></v-text-field>
-            <v-textarea name="input-7-1" label="เนื้อหา"></v-textarea>
+            <v-textarea name="input-7-1" label="เนื้อหา" v-model="postData.message"></v-textarea>
             <div class="d-flex justify-content-end">
-              <v-btn color="success">ประกาศ</v-btn>
+              <v-btn color="success" @click="post">ประกาศ</v-btn>
             </div>
           </v-card>
         </section>
         <v-row>
-          <v-col lg="4" cols="12" v-for="alert in 4" :key="alert">
-            <v-card color="#26c6da" dark max-width="420">
+          <v-col lg="4" cols="12" v-for="i in postList" :key="i">
+            <v-card :color="(i.priority=='1') ? 'red' : '#26c6da'" dark max-width="420">
               <v-card-title>
                 <v-icon large left> mdi-bullhorn </v-icon>
                 <span class="title font-weight-light"
-                  >mentos จะทำการฆ่าเจ้าของ</span
+                  >{{i.title}}</span
                 >
               </v-card-title>
 
               <v-card-text class="headline font-weight-bold">
-                "Turns out semicolon-less style is easier and safer in TS
-                because most gotcha edge cases are type invalid as well."
+                {{i.Message}}
               </v-card-text>
 
               <v-card-actions>
@@ -96,7 +95,7 @@
                   </v-list-item-avatar>
 
                   <v-list-item-content>
-                    <v-list-item-title>Mentos</v-list-item-title>
+                    <v-list-item-title>{{i.FnameTH + " " + i.LnameTH}}</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-card-actions>
@@ -109,9 +108,18 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
-    return {};
+    return {
+      postData: {
+        title: "",
+        message: ""
+      },
+      classroomSelect: "",
+      classAdvisorList: "",
+      postList: ""
+    };
   },
   methods: {
     menuSelect(select) {
@@ -120,6 +128,54 @@ export default {
       else if (select == 3) this.$router.push({ name: "TeacherScore" });
       else if (select == 4) this.$router.push({ name: "StudentView" });
     },
+    fetchPost() {
+      axios.get("/user/post/getPost", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+        },
+        params: {
+          PostById: this.$store.getters.getUserData.id
+        }
+      }).then(res=> {
+        this.postList = res.data.data
+      })
+    },
+    post() {
+      axios.get("/user/post/addPost", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+        },
+        params: {
+          title: this.postData.title,
+          Message: this.postData.message,
+          PostById: this.$store.getters.getUserData.id,
+          priority: "2"
+        },
+      }).then(()=> {
+        this.fetchPost()
+      })
+    },
+    fetchAdvisorRoom() {
+      axios
+        .get("/user/teacher/getAdvisor", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userKey")}`,
+          },
+          params: {
+            CitizenID: this.$store.getters.getUserData.id,
+          },
+        })
+        .then((res) => {
+          this.classAdvisorList = res.data.data;
+          // console.log(this.classAdvisorList);
+        });
+    },
+  },
+  created() {
+    this.$store.dispatch("academicData");
+    this.$store.dispatch("pollState");
+    this.fetchAdvisorRoom();
+    this.fetchPost()
   },
 };
 </script>

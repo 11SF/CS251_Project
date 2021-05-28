@@ -166,7 +166,7 @@ export default {
         .then((res) => {
           if (res.status) {
             this.user = res.data.data;
-            console.log(this.user);
+            // console.log(this.user);
             axios
               .get("/user/student/get/advisor", {
                 headers: {
@@ -194,7 +194,7 @@ export default {
               .then((res) => {
                 if (res.status) {
                   this.classroom = res.data.data;
-                  console.log(this.classroom);
+                  // console.log(this.classroom);
                 }
               });
           }
