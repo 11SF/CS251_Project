@@ -1,3 +1,4 @@
+## backend repo : https://github.com/11SF/cs251_backend
 # cs251_project
 
 ## Project setup
